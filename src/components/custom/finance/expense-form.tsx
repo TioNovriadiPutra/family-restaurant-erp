@@ -1,3 +1,4 @@
+import { CurrencyField } from "@/components/shared/currency-field";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
 import { RequiredMark } from "@/components/shared/required-mark";
@@ -25,7 +26,10 @@ export function FinanceExpenseForm(p: FinanceFormProps) {
           setelah disimpan.
         </p>
       </div>
-      <fieldset disabled={s.pending} className="grid items-start gap-4 sm:grid-cols-2">
+      <fieldset
+        disabled={s.pending}
+        className="grid items-start gap-4 sm:grid-cols-2"
+      >
         <label className="ui-field">
           <span className="ui-label">
             Kategori beban
@@ -56,17 +60,19 @@ export function FinanceExpenseForm(p: FinanceFormProps) {
               ))}
           </FormSelect>
         </label>
-        <TextField
+        <CurrencyField
+          fractionDigits={2}
           id="expense-amount"
           label="Jumlah (Rp)"
-          inputMode="decimal"
           required
           error={errors.amount?.message}
-          {...register("amount", {
+          name={"amount"}
+          control={s.form.control}
+          rules={{
             required: "Jumlah wajib diisi.",
             validate: (v) =>
               financeMoney(v) || "Nominal harus positif, maksimal 2 desimal.",
-          })}
+          }}
         />
         <TextField
           id="expense-date"

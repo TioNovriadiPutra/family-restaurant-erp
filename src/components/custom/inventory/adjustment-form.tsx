@@ -1,3 +1,4 @@
+import { CurrencyField } from "@/components/shared/currency-field";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { Add, Trash } from "iconsax-reactjs";
 import { TextField } from "@/components/shared/text-field";
@@ -202,19 +203,17 @@ export function InventoryAdjustmentEditor({
                     Stok akan berkurang setelah disetujui.
                   </div>
                 )}
-                <TextField
+                <CurrencyField
                   id={`adjustment-cost-${index}`}
                   label="Biaya satuan (opsional)"
-                  inputMode="decimal"
                   readOnly={waste}
                   placeholder="Biaya rata-rata"
                   error={
                     form.formState.errors.lines?.[index]?.unitCost?.message
                   }
-                  {...form.register(
-                    `lines.${index}.unitCost`,
-                    inventoryDecimalRule,
-                  )}
+                  name={`lines.${index}.unitCost`}
+                  control={form.control}
+                  rules={inventoryDecimalRule}
                 />
                 <button
                   type="button"

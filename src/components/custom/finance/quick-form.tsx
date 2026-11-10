@@ -1,3 +1,4 @@
+import { CurrencyField } from "@/components/shared/currency-field";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
 import { RequiredMark } from "@/components/shared/required-mark";
@@ -137,18 +138,20 @@ export function FinanceQuickForm(p: FinanceQuickProps) {
                 </FormSelect>
               </label>
             )}
-            <TextField
+            <CurrencyField
+              fractionDigits={2}
               id="finance-amount"
               label="Jumlah (Rp)"
-              inputMode="decimal"
               required
               error={errors.amount?.message}
-              {...register("amount", {
+              name={"amount"}
+              control={s.form.control}
+              rules={{
                 required: "Jumlah wajib diisi.",
                 validate: (v) =>
                   financeMoney(v) ||
                   "Gunakan nominal positif, maksimal 2 desimal.",
-              })}
+              }}
             />
             <TextField
               id="finance-date"

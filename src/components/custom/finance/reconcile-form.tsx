@@ -1,3 +1,4 @@
+import { CurrencyField } from "@/components/shared/currency-field";
 import { FormSelect } from "@/components/shared/form-select";
 import { RequiredMark } from "@/components/shared/required-mark";
 import { useFinanceReconcile } from "@/hooks/finance/use-finance-reconcile";
@@ -46,29 +47,23 @@ function Allocations({
                 {financeDate(l.date)} / Sisa {financeCurrency(l.remaining)}
               </span>
               <span className="mt-2 block text-xs">Jumlah alokasi (Rp)</span>
-              <input
+              <CurrencyField
+                allowNegative
+                fractionDigits={2}
                 aria-label={`Alokasi ${title} ${i + 1}`}
                 aria-invalid={Boolean(form.formState.errors[name]?.[i]?.amount)}
-                className="ui-input mt-1"
-                inputMode="decimal"
                 disabled={disabled}
-                {...form.register(`${name}.${i}.amount`, {
+                name={`${name}.${i}.amount`}
+                control={form.control}
+                rules={{
                   validate: (v, values) =>
                     !values[name][i]?.selected ||
                     (financeMoney(v, true) &&
                       Math.sign(Number(v)) === Math.sign(Number(l.remaining)) &&
                       Math.abs(Number(v)) <= Math.abs(Number(l.remaining))) ||
                     "Alokasi harus searah dan tidak melebihi sisa transaksi.",
-                })}
+                }}
               />
-              {form.formState.errors[name]?.[i]?.amount && (
-                <span
-                  role="alert"
-                  className="mt-1 block text-xs text-destructive"
-                >
-                  {form.formState.errors[name]?.[i]?.amount?.message}
-                </span>
-              )}
             </span>
           </div>
         ))

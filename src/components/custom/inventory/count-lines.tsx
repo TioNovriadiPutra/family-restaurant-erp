@@ -1,3 +1,4 @@
+import { CurrencyField } from "@/components/shared/currency-field";
 import { TextField } from "@/components/shared/text-field";
 import { RequiredMark } from "@/components/shared/required-mark";
 import { inventoryDecimalRule } from "@/lib/inventory-form-rules";
@@ -75,12 +76,13 @@ export function InventoryCountLines(props: InventoryCountEditorProps) {
               maxLength={500}
               {...form.register(`lines.${i}.reason`)}
             />
-            <TextField
+            <CurrencyField
               id={`count-cost-${i}`}
               label="Biaya satuan bila belum ada"
-              inputMode="decimal"
               error={form.formState.errors.lines?.[i]?.unitCost?.message}
-              {...form.register(`lines.${i}.unitCost`, inventoryDecimalRule)}
+              name={`lines.${i}.unitCost`}
+              control={form.control}
+              rules={inventoryDecimalRule}
             />
             {l.counted != null && (
               <label className="flex min-h-11 items-center gap-3 text-xs text-muted-foreground sm:col-span-2 lg:col-span-4">

@@ -1,6 +1,7 @@
 // Local review harness: real Next.js app, fake Supabase services, loopback only.
 // Never imported by application code. No production credentials are read.
 import http from "node:http";
+import {createSettingsReview} from "./review-settings-data.mjs";
 import next from "next";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -23,10 +24,11 @@ const secondId = "65ef7c2e-d91a-4efb-a0bb-019c422062a2";
 const inventoryReview=createInventoryReview(id,id,secondId);
 const recipesReview=createRecipesReview(id);
 const financeReview=createFinanceReview(id);
+const settingsReview=createSettingsReview(id);
 const user = { id, email: "pemilik@example.invalid", aud: "authenticated", role: "authenticated", app_metadata: {}, user_metadata: {}, created_at: "2026-11-08T00:00:00Z" };
 const permissions = ["reports.read", "sales.read", "inventory.read", "inventory.manage", "audit.read", "recipes.read", "refunds.read", "finance.read", "approvals.review", "purchasing.read", "staff.read", "organization.manage", "menu.read", "rbac.read", "shifts.read"];
 const access = [id,secondId].map((outlet_id,index) => ({ employee_id: id, restaurant_id: id, outlet_id, outlet_name: index ? "Outlet cadangan" : "Outlet utama", role: "Pemilik", permissions }));
-permissions.push("staff.manage", "rbac.manage", "purchasing.manage", "finance.manage", "recipes.manage");
+permissions.push("organization.read", "menu.manage", "staff.manage", "rbac.manage", "purchasing.manage", "finance.manage", "recipes.manage");
 const employeeRoles = ["Pemilik", "Manajer", "Kasir", "Staf Gudang"].map((name,index)=>({id:`65ef7c2e-d91a-4efb-a0bb-019c422063a${index}`,name}));
 const employees = ["Andi Pratama", "Siti Rahma", "Budi Santoso"].map((name,index)=>({id:`65ef7c2e-d91a-4efb-a0bb-019c422064a${index}`,employee_code:`KRY-00${index+1}`,name,email:`karyawan${index+1}@example.invalid`,phone:null,active:index!==2,login_linked:false,created_at:"2026-11-08T00:00:00Z",roles:[employeeRoles[[2,1,3][index]]]}));
 const configuredPins=new Set();
@@ -74,6 +76,7 @@ const fake = http.createServer(async (req,res) => {
   else if (req.url === "/rest/v1/rpc/finance_read" || req.url === "/rest/v1/rpc/finance_write") {
     const input=JSON.parse(raw);res.end(JSON.stringify(financeReview(req.url.endsWith("finance_write"),input.p_action??input.p_view,input.p_data,input.p_request_id)));
   }
+  else if (req.url === "/rest/v1/rpc/settings_read" || req.url === "/rest/v1/rpc/settings_write") {const input=JSON.parse(raw);res.end(JSON.stringify(settingsReview(req.url.endsWith("settings_write"),input.p_action??input.p_view,input.p_data)));}
   else if(req.url.startsWith("/storage/v1/object/sign/")){res.end(JSON.stringify({signedURL:"/object/sign/review-proof?token=fixture"}));}
   else if(req.url.startsWith("/storage/v1/object/")){res.end(JSON.stringify({Key:req.url,Id:id}));}
   else if (req.url === "/rest/v1/rpc/simple_purchasing") {

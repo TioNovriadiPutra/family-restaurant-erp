@@ -66,7 +66,7 @@ Business screens require sign-in and the appropriate permissions. Employee creat
 
 Employee, purchasing, inventory, recipe/production, and finance workflows are implemented. The application remains under active development.
 
-The **Reports** and **Settings** menus currently contain navigation/design placeholders. POS ordering, payment-provider integration, and consumption of recipe ingredients during POS sales belong to separate implementation work. Current HPP estimates describe recipe costs; they are not a completed actual-sales profitability report.
+**Settings** now includes restaurant/charge policies, menu categories and price history, payment/receipt preferences, and protected role management. The `settings_workflows` migration was deployed on 10 November 2026 after schema/history inspection; RPC permissions and existing data counts were verified. Browser mutation tests used local fixtures. The **Reports** menu currently contains navigation/design placeholders. POS ordering, payment-provider integration, and consumption of recipe ingredients during POS sales belong to separate implementation work. Current HPP estimates describe recipe costs; they are not a completed actual-sales profitability report.
 
 ## Technology
 

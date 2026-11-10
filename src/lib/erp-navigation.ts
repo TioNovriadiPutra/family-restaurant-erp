@@ -9,5 +9,5 @@ export const erpNavigation: NavigationItem[] = [
   { slug: "keuangan", label: "Keuangan", permission: "finance.read", icon: Wallet2 },
   { slug: "laporan", label: "Laporan", permission: "reports.read", icon: Chart2 },
   { slug: "karyawan", label: "Karyawan", permission: "staff.read", icon: People },
-  { slug: "pengaturan", label: "Pengaturan", permission: "organization.manage", icon: Setting2 },
+  { slug: "pengaturan", label: "Pengaturan", permission: "organization.read", icon: Setting2 },
 ];

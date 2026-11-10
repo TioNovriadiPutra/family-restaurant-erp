@@ -1,3 +1,4 @@
+import { CurrencyField } from "@/components/shared/currency-field";
 import { Add, Trash } from "iconsax-reactjs";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
@@ -128,17 +129,18 @@ export function RecipeEditor(props: RecipeEditorProps) {
                 "Hasil kotor minimal sama dengan hasil bersih.",
             })}
           />
-          <TextField
+          <CurrencyField
             id="recipe-price"
             label="Harga jual acuan (opsional)"
-            inputMode="decimal"
             error={errors.referencePrice?.message}
-            {...register("referencePrice", {
+            name={"referencePrice"}
+            control={s.form.control}
+            rules={{
               validate: (v) =>
                 v === "" ||
                 recipeDecimal(v, 1000000000) ||
                 "Isi harga positif.",
-            })}
+            }}
           />
           <TextField
             id="recipe-target"

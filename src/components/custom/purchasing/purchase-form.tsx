@@ -1,3 +1,4 @@
+import { CurrencyField } from "@/components/shared/currency-field";
 import { FormModal } from "@/components/shared/form-modal";
 import { RequiredMark } from "@/components/shared/required-mark";
 import { FormSelect } from "@/components/shared/form-select";
@@ -311,18 +312,17 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                   <label className="text-sm font-medium">
                     Harga per satuan
                     <RequiredMark />
-                    <input
-                      className="ui-input mt-1.5"
-                      type="number"
-                      inputMode="decimal"
+                    <CurrencyField
+                      fractionDigits={2}
                       min="0.01"
                       max="1000000000"
-                      step="0.01"
-                      {...register(`lines.${index}.unitPrice`, {
+                      name={`lines.${index}.unitPrice`}
+                      control={state.form.control}
+                      rules={{
                         required: "Harga satuan wajib diisi.",
                         min: 0.01,
                         max: 1000000000,
-                      })}
+                      }}
                       required
                     />
                   </label>

@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import { useForm } from "react-hook-form";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
@@ -21,7 +22,7 @@ export function InventoryAuxEditor({
     <form
       aria-busy={command.pending}
       noValidate
-      className="ui-card space-y-4"
+      className="ui-card space-y-4 ui-form ui-form-panel"
       onSubmit={form.handleSubmit(async (v) => {
         try {
           onSaved(
@@ -37,9 +38,9 @@ export function InventoryAuxEditor({
         }
       })}
     >
-      <h2 className="text-lg font-semibold">
+      <SectionTitle className="">
         {mode === "location" ? "Tambah lokasi stok" : "Tambah satuan"}
-      </h2>
+      </SectionTitle>
       {mode === "location" ? (
         <TextField
           id="location-name"

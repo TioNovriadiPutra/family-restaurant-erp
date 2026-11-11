@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local visual audit outputs include generated browser/extension scripts.
+    ".taste-skill/**",
   ]),
 ]);
 

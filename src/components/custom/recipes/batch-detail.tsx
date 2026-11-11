@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { SectionTitle } from '@/components/shared/page-heading';
 import {
   recipeDate,
   recipeError,
@@ -33,11 +35,11 @@ export function RecipeBatchPanel(props: RecipeBatchDetailProps) {
     <section aria-label="Detail produksi bahan" className="ui-card space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             {b.number} · {recipeStatus[b.status]}
           </p>
-          <h2 className="mt-1 text-xl font-semibold">{b.recipe_name}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <SectionTitle className="mt-1">{b.recipe_name}</SectionTitle>
+          <p className="mt-1 text-14 text-muted-foreground">
             Versi {b.recipe_version} · {b.output_location} ·{" "}
             {recipeDate(b.produced_at)} · {b.produced_by_name}
           </p>
@@ -63,20 +65,20 @@ export function RecipeBatchPanel(props: RecipeBatchDetailProps) {
           ],
         ].map(([label, value]) => (
           <div key={label} className="rounded-control bg-secondary p-4">
-            <dt className="text-sm text-muted-foreground">{label}</dt>
+            <dt className="text-14 text-muted-foreground">{label}</dt>
             <dd className="mt-1 text-lg font-semibold">{value}</dd>
           </div>
         ))}
       </dl>
       <div className="ui-table-container">
-        <table className="ui-table min-w-[680px]">
+        <DataTable className="min-w-[680px]">
           <thead>
             <tr>
               {["Bahan aktual", "Lokasi bahan", "Dipakai", "Nilai aktual"].map(
                 (t) => (
-                  <th key={t} scope="col">
+                  <DataTableHead key={t} scope="col">
                     {t}
-                  </th>
+                  </DataTableHead>
                 ),
               )}
             </tr>
@@ -95,12 +97,12 @@ export function RecipeBatchPanel(props: RecipeBatchDetailProps) {
               </tr>
             ))}
           </tbody>
-        </table>
+        </DataTable>
       </div>
-      {b.notes && <p className="text-sm text-muted-foreground">{b.notes}</p>}
+      {b.notes && <p className="text-14 text-muted-foreground">{b.notes}</p>}
       {b.status === "draft" && (
         <>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             Menyelesaikan produksi akan mengurangi bahan dan menambah {b.output_name} sesuai hasil
             bersih aktual dalam satu transaksi. Nilai total persediaan tetap
             sama.

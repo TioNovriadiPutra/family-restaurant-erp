@@ -37,7 +37,7 @@ export function CurrencyField<T extends FieldValues>({
       <span className="relative block min-w-0">
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-muted-foreground"
+          className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-14 text-muted-foreground"
         >
           Rp
         </span>

@@ -1,39 +1,154 @@
+import { PageTitle } from "@/components/shared/page-heading";
 import Link from "next/link";
+import {
+  Wallet2,
+  ReceiptItem,
+  Chart2,
+  TrendUp,
+  Calendar1,
+  ArrowRight2,
+} from "iconsax-reactjs";
+import { useMemo } from "react";
 import type { DashboardViewProps } from "@/interfaces/dashboard";
-import { activityLabel, costDetail, dateLabel, rupiah } from "@/controller/dashboard/format";
+import {
+  activityLabel,
+  costDetail,
+  dateLabel,
+  rupiah,
+} from "@/controller/dashboard/format";
 import { MetricCard } from "./metric-card";
 import { SalesChart } from "./sales-chart";
-
-export function DashboardView({ data, outletName, permissions }: DashboardViewProps) {
-  return <div className="space-y-8">
-    <div className="flex flex-wrap items-start justify-between gap-4">
-      <p className="sr-only">Data diperbarui {new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: data.timezone, timeZoneName: "short" }).format(new Date(data.generated_at))}. Ringkasan operasional, bukan laporan laba rugi final.</p>
-      <div><h1 className="type-28-semibold">Ringkasan hari ini</h1><p className="mt-2 text-pretty type-14-regular text-muted-foreground">{dateLabel(data.day)} · {outletName} · Sebelum pajak, layanan & retur</p></div>
-      {permissions.includes("reports.read") && <Link href="/laporan" className="ui-button ui-button-secondary w-full sm:w-auto sm:min-w-44">Lihat laporan</Link>}
+import { MenuPerformance } from "./menu-performance";
+import { DashboardOperations } from "./dashboard-operations";
+export function DashboardView({
+  data,
+  outletName,
+  permissions,
+}: DashboardViewProps) {
+  const time = useMemo(
+    () =>
+      new Intl.DateTimeFormat("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: data.timezone,
+      }),
+    [data.timezone],
+  );
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <PageTitle>
+            Ringkasan hari ini
+          </PageTitle>
+          <p className="mt-2 flex flex-wrap items-center gap-2 type-14-regular text-muted-foreground">
+            <Calendar1 size={16} aria-hidden="true" />
+            {dateLabel(data.day)} / {outletName}
+          </p>
+        </div>
+        {permissions.includes("reports.read") && (
+          <Link
+            prefetch={false}
+            href="/laporan"
+            className="ui-button ui-button-secondary w-full sm:w-auto"
+          >
+            Lihat laporan <ArrowRight2 size={16} aria-hidden="true" />
+          </Link>
+        )}
+      </div>
+      <p className="sr-only">
+        Data diperbarui {time.format(new Date(data.generated_at))}. Ringkasan
+        operasional, bukan laporan laba rugi final.
+      </p>
+      {data.has_refunds && (
+        <p className="ui-alert ui-alert-warning" role="status">
+          Ada transaksi dengan retur. Pendapatan di bawah belum dikurangi retur;
+          estimasi laba ditahan agar tidak menampilkan angka yang keliru.
+        </p>
+      )}
+      <div className="dashboard-metrics">
+        <MetricCard
+          featured
+          icon={Wallet2}
+          label="Pendapatan bersih"
+          value={rupiah(data.revenue)}
+          detail={`${data.paid_orders} transaksi lunas / setelah diskon`}
+        />
+        <MetricCard
+          icon={ReceiptItem}
+          label="Transaksi lunas"
+          value={data.paid_orders.toLocaleString("id-ID")}
+          detail={`${data.open_orders} pesanan masih terbuka`}
+        />
+        <MetricCard
+          icon={Chart2}
+          label="Rata-rata transaksi"
+          value={rupiah(data.average_order)}
+          detail="Pendapatan dibagi transaksi lunas"
+        />
+      </div>
+      <div className="dashboard-primary-grid">
+        <SalesChart points={data.sales} />
+        <MenuPerformance items={data.top_menu} />
+      </div>
+      <div className="dashboard-secondary-grid">
+        <section className="ui-card">
+          <div className="dashboard-section-heading">
+            <h2>Estimasi laba kotor</h2>
+            <TrendUp
+              size={20}
+              aria-hidden="true"
+              className="text-primary shrink-0"
+            />
+          </div>
+          <p className="type-28-semibold tabular-nums break-words">
+            {rupiah(data.gross_profit)}
+          </p>
+          <p className="mt-3 type-13-regular text-muted-foreground">
+            {costDetail(data.cost, data.gross_profit, data.revenue)}
+          </p>
+          <p className="mt-6 type-13-regular text-muted-foreground">
+            Pendapatan setelah diskon, sebelum pajak, layanan dan retur.
+            Estimasi laba mengikuti kelengkapan HPP.
+          </p>
+        </section>
+        <DashboardOperations data={data} permissions={permissions} />
+        <section className="ui-card">
+          <div className="dashboard-section-heading">
+            <div>
+              <h2>Aktivitas operasional</h2>
+              <p className="mt-1 type-13-regular text-muted-foreground">
+                Pencatatan terbaru di outlet
+              </p>
+            </div>
+          </div>
+          {data.activities.length ? (
+            <ol>
+              {data.activities.map((activity) => (
+                <li key={activity.id} className="dashboard-activity">
+                  <time
+                    dateTime={activity.occurred_at}
+                    className="type-13-regular text-muted-foreground"
+                  >
+                    {time.format(new Date(activity.occurred_at))}
+                  </time>
+                  <p className="type-14-regular">
+                    {activityLabel(
+                      activity.action,
+                      activity.entity_type,
+                      activity.number,
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="type-14-regular text-muted-foreground">
+              Belum ada aktivitas operasional.
+            </p>
+          )}
+        </section>
+      </div>
     </div>
-    {data.has_refunds && <p className="ui-alert ui-alert-warning" role="status">Ada transaksi dengan retur. Pendapatan di bawah belum dikurangi retur; estimasi laba ditahan agar tidak menampilkan angka yang keliru.</p>}
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-6">
-      <MetricCard label="Pendapatan bersih" value={rupiah(data.revenue)} detail={`${data.paid_orders} transaksi lunas · setelah diskon`} tone="bg-pastel-sage" />
-      <MetricCard label="Transaksi lunas" value={data.paid_orders.toLocaleString("id-ID")} detail={`${data.open_orders} pesanan masih terbuka`} tone="bg-pastel-peach" />
-      <MetricCard label="Rata-rata transaksi" value={rupiah(data.average_order)} detail="Pendapatan ÷ transaksi" tone="bg-pastel-blue" />
-      <MetricCard label="Estimasi laba kotor" value={rupiah(data.gross_profit)} detail={costDetail(data.cost, data.gross_profit, data.revenue)} tone="bg-destructive-background" />
-    </div>
-    <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
-      <SalesChart points={data.sales} />
-      <section className="ui-card flex flex-col">
-        <h2 className="type-20-semibold">Perlu ditindaklanjuti</h2>
-        <ul className="my-8 space-y-2 type-16-regular"><li>{data.low_stock} bahan di bawah stok minimum</li><li>{data.pending_counts} opname menunggu persetujuan</li><li>{data.pending_edc} pembayaran EDC perlu verifikasi</li></ul>
-        {permissions.includes("inventory.read") && <Link href="/persediaan" className="ui-button ui-button-secondary mt-auto w-full">Periksa stok minimum</Link>}
-      </section>
-      <section className="ui-table-container self-start" aria-label="Menu terlaris hari ini">
-        <table className="ui-table"><thead><tr><th scope="col">Menu terlaris</th><th scope="col" className="text-right">Porsi</th><th scope="col" className="text-right">Penjualan</th></tr></thead>
-          <tbody>{data.top_menu.length ? data.top_menu.map((item, index) => <tr key={`${item.name}-${index}`}><th scope="row" className="!text-foreground">{item.name}</th><td className="ui-amount">{Number(item.quantity).toLocaleString("id-ID", { maximumFractionDigits: 3 })}</td><td className="ui-amount text-primary">{rupiah(item.revenue)}</td></tr>) : <tr><td colSpan={3} className="!py-8 text-center text-muted-foreground">Belum ada menu terjual hari ini.</td></tr>}</tbody>
-        </table>
-      </section>
-      <section className="ui-card">
-        <h2 className="type-20-semibold">Aktivitas operasional</h2>
-        {data.activities.length ? <ol className="mt-5 grid gap-4">{data.activities.map(activity => <li key={activity.id} className="grid grid-cols-[48px_minmax(0,1fr)] gap-4"><time dateTime={activity.occurred_at} className="type-13-regular text-muted-foreground">{new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: data.timezone }).format(new Date(activity.occurred_at))}</time><p>{activityLabel(activity.action, activity.entity_type, activity.number)}</p></li>)}</ol> : <p className="mt-5 text-muted-foreground">Belum ada aktivitas operasional.</p>}
-      </section>
-    </div>
-  </div>;
+  );
 }

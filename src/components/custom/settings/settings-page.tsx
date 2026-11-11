@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { PageHeader, PageTitle, SectionTitle } from '@/components/shared/page-heading';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Add, Edit2, ArrowLeft2 } from "iconsax-reactjs";
@@ -83,15 +85,15 @@ function Workspace(p: SettingsWorkspaceProps) {
     <div className="space-y-5">
       <Link
         href="/pengaturan"
-        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground"
+        className="inline-flex min-h-11 items-center gap-2 text-14 text-muted-foreground"
       >
         <ArrowLeft2 size={16} />
         Pengaturan
       </Link>
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <PageHeader className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold">{settingsLabels[p.view]}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <PageTitle className="">{settingsLabels[p.view]}</PageTitle>
+          <p className="mt-1 text-14 text-muted-foreground">
             Pengaturan operasional restoran untuk lokasi yang dipilih.
           </p>
         </div>
@@ -129,7 +131,7 @@ function Workspace(p: SettingsWorkspaceProps) {
             ) : null}
           </div>
         )}
-      </div>
+      </PageHeader>
       {s.notice && (
         <p role="status" className="ui-alert ui-alert-info">
           {s.notice}
@@ -177,11 +179,11 @@ function Workspace(p: SettingsWorkspaceProps) {
                       ],
                     ].map(([k, v]) => (
                       <div key={k}>
-                        <p className="text-sm text-muted-foreground">{k}</p>
+                        <p className="text-14 text-muted-foreground">{k}</p>
                         <p className="mt-1 font-medium">{v}</p>
                       </div>
                     ))}
-                    <p className="text-sm text-muted-foreground sm:col-span-2">
+                    <p className="text-14 text-muted-foreground sm:col-span-2">
                       Perubahan tarif berlaku untuk transaksi berikutnya.
                       Riwayat transaksi tetap memakai kebijakan sebelumnya.
                     </p>
@@ -201,7 +203,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                       onChange={(e) => s.setSearch(e.target.value)}
                     />
                     <div className="ui-card overflow-x-auto">
-                      <table className="w-full text-left text-sm">
+                      <DataTable className="w-full text-left text-14">
                         <thead>
                           <tr className="border-b border-border">
                             {[
@@ -212,9 +214,9 @@ function Workspace(p: SettingsWorkspaceProps) {
                               "Status",
                               "Tindakan",
                             ].map((t) => (
-                              <th key={t} className="p-3">
+                              <DataTableHead key={t} className="">
                                 {t}
-                              </th>
+                              </DataTableHead>
                             ))}
                           </tr>
                         </thead>
@@ -224,19 +226,19 @@ function Workspace(p: SettingsWorkspaceProps) {
                               key={m.id}
                               className="border-b border-border hover:bg-muted/40"
                             >
-                              <td className="p-3 font-medium">
+                              <td className="font-medium">
                                 {m.name}
-                                <span className="block text-xs font-normal text-muted-foreground">
+                                <span className="block text-13 font-normal text-muted-foreground">
                                   {m.recipeName ?? "Belum terhubung resep"}
                                 </span>
                               </td>
-                              <td className="p-3">{m.category}</td>
-                              <td className="p-3">
+                              <td className="">{m.category}</td>
+                              <td className="">
                                 {m.price === null
                                   ? "Belum diatur"
                                   : settingsMoney(m.price)}
                               </td>
-                              <td className="p-3">
+                              <td className="">
                                 {m.cost?.complete && m.cost.perOutput !== null
                                   ? settingsMoney(
                                       Number(m.cost.perOutput) *
@@ -244,8 +246,8 @@ function Workspace(p: SettingsWorkspaceProps) {
                                     )
                                   : "Belum tersedia"}
                               </td>
-                              <td className="p-3">{settingsMenuStatus(m)}</td>
-                              <td className="p-3">
+                              <td className="">{settingsMenuStatus(m)}</td>
+                              <td className="">
                                 {p.canManage && (
                                   <div className="flex gap-3">
                                     <Link
@@ -297,14 +299,14 @@ function Workspace(p: SettingsWorkspaceProps) {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </DataTable>
                       {!d.items.length && (
                         <p className="p-5 text-muted-foreground">
                           Belum ada menu yang sesuai.
                         </p>
                       )}
                     </div>
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center justify-between text-14">
                       <p>{d.total} menu</p>
                       <div className="flex gap-2">
                         <button
@@ -324,7 +326,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                       </div>
                     </div>
                     <section className="ui-card">
-                      <h2 className="mb-3 font-semibold">Kategori menu</h2>
+                      <SectionTitle className="mb-3">Kategori menu</SectionTitle>
                       {options.error && (
                         <p role="alert">{settingsError(options.error)}</p>
                       )}
@@ -349,7 +351,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                   <>
                     <section className="ui-card">
                       <div className="flex items-center justify-between">
-                        <h2 className="font-semibold">Preferensi struk</h2>
+                        <SectionTitle className="">Preferensi struk</SectionTitle>
                         {p.canManage && (
                           <Link
                             href={edit(undefined, "receipt")}
@@ -360,7 +362,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                         )}
                       </div>
                       {receipt.data ? (
-                        <p className="mt-3 text-sm text-muted-foreground">
+                        <p className="mt-3 text-14 text-muted-foreground">
                           Kertas {receipt.data.paperWidth} mm.{" "}
                           {receipt.data.header || "Teks pembuka belum diatur."}{" "}
                           {receipt.data.footer}
@@ -372,7 +374,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                             : "Memuat preferensi..."}
                         </p>
                       )}
-                      <p className="mt-2 text-xs text-muted-foreground">
+                      <p className="mt-2 text-13 text-muted-foreground">
                         Preferensi ini digunakan oleh integrasi printer dan
                         struk POS.
                       </p>
@@ -382,8 +384,8 @@ function Workspace(p: SettingsWorkspaceProps) {
                         <section key={m.id} className="ui-card">
                           <div className="flex items-start justify-between gap-3">
                             <div>
-                              <h2 className="font-semibold">{m.name}</h2>
-                              <p className="mt-1 text-sm text-muted-foreground">{`${m.kind.toUpperCase()} / ${m.active ? "Aktif" : "Nonaktif"}`}</p>
+                              <SectionTitle className="">{m.name}</SectionTitle>
+                              <p className="mt-1 text-14 text-muted-foreground">{`${m.kind.toUpperCase()} / ${m.active ? "Aktif" : "Nonaktif"}`}</p>
                             </div>
                             {p.canManage && (
                               <button
@@ -394,9 +396,9 @@ function Workspace(p: SettingsWorkspaceProps) {
                               </button>
                             )}
                           </div>
-                          <p className="mt-3 text-sm">{m.clearingAccount}</p>
+                          <p className="mt-3 text-14">{m.clearingAccount}</p>
                           {m.approval && (
-                            <p className="mt-2 text-xs text-muted-foreground">
+                            <p className="mt-2 text-13 text-muted-foreground">
                               Memerlukan persetujuan pembayaran.
                             </p>
                           )}
@@ -409,7 +411,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                         sebelum menambah metode tunai.
                       </p>
                     )}
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-14 text-muted-foreground">
                       Konfigurasi merchant menyimpan referensi penyedia.
                       Aktivasi gateway pembayaran memerlukan integrasi layanan
                       tersendiri.
@@ -426,7 +428,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                       {d.roles.map((r) => (
                         <section key={r.id} className="ui-card">
                           <div className="flex items-center justify-between">
-                            <h2 className="font-semibold">{r.name}</h2>
+                            <SectionTitle className="">{r.name}</SectionTitle>
                             {p.canManage && r.name !== "Pemilik" && (
                               <Link
                                 href={edit(r.id)}
@@ -436,9 +438,9 @@ function Workspace(p: SettingsWorkspaceProps) {
                               </Link>
                             )}
                           </div>
-                          <p className="mt-3 text-sm text-muted-foreground">{`${r.permissions.length} izin / batas diskon ${r.discountPercent}%`}</p>
+                          <p className="mt-3 text-14 text-muted-foreground">{`${r.permissions.length} izin / batas diskon ${r.discountPercent}%`}</p>
                           {r.name === "Pemilik" && (
-                            <p className="mt-2 text-xs text-muted-foreground">
+                            <p className="mt-2 text-13 text-muted-foreground">
                               Hak akses Pemilik dilindungi.
                             </p>
                           )}
@@ -446,7 +448,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                       ))}
                     </div>
                     <section className="ui-card">
-                      <h2 className="mb-3 font-semibold">Role karyawan</h2>
+                      <SectionTitle className="mb-3">Role karyawan</SectionTitle>
                       {!d.canReadStaff ? (
                         <p>Izin membaca karyawan diperlukan.</p>
                       ) : (
@@ -457,7 +459,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                           >
                             <div>
                               <p className="font-medium">{e.name}</p>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-14 text-muted-foreground">
                                 {e.roleIds
                                   .map(
                                     (id) =>
@@ -502,7 +504,7 @@ function Workspace(p: SettingsWorkspaceProps) {
                       )}
                       <Link
                         href="/karyawan"
-                        className="mt-4 inline-block text-sm text-primary underline"
+                        className="mt-4 inline-block text-14 text-primary underline"
                       >
                         Kelola profil karyawan
                       </Link>

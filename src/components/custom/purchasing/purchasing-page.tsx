@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { PageHeader, PageTitle, SectionTitle } from '@/components/shared/page-heading';
 import { useRouter } from "next/router";
 import { FormModal } from "@/components/shared/form-modal";
 import Link from "next/link";
@@ -51,19 +53,19 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
     <div className="space-y-5">
       <Link
         href={view === "stock" ? "/persediaan" : "/pembelian"}
-        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        className="inline-flex min-h-11 items-center gap-2 text-14 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft2 size={16} aria-hidden />
         {view === "stock" ? "Persediaan" : "Pembelian"}
       </Link>
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <PageHeader className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <span className="rounded-xl bg-primary/10 p-3 text-primary">
+          <span className="ui-page-icon">
             <Icon size={23} aria-hidden />
           </span>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+            <PageTitle className="">{title}</PageTitle>
+            <p className="mt-1 max-w-2xl text-14 text-muted-foreground">
               {description}
             </p>
           </div>
@@ -82,7 +84,7 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
             {view === "suppliers" ? "Tambah supplier" : "Catat pembelian"}
           </button>
         )}
-      </div>
+      </PageHeader>
       {(s.notice || router.query.saved === "1") && (
         <p className="ui-alert ui-alert-success" role="status">
           {s.notice || "Pembelian tercatat. Stok bahan sudah bertambah."}
@@ -115,22 +117,22 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
         />
       )}
       <section
-        className="ui-card overflow-hidden"
+        className="ui-table-container"
         aria-label={`Daftar ${title.toLowerCase()}`}
       >
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-4">
-          <h2 className="font-semibold">
+        <div className="ui-filter-bar flex flex-wrap items-center justify-between">
+          <SectionTitle className="">
             {view === "suppliers"
               ? "Daftar supplier"
               : view === "stock"
                 ? "Saldo stok"
                 : "Riwayat pembelian"}
-          </h2>
+          </SectionTitle>
           {view !== "stock" && (
             <label className="relative w-full sm:w-72">
               <SearchNormal1
                 size={17}
-                className="pointer-events-none absolute left-3 top-3.5 text-muted-foreground"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 aria-hidden
               />
               <span className="sr-only">Cari {title.toLowerCase()}</span>
@@ -148,12 +150,12 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
           )}
         </div>
         {s.query.isPending ? (
-          <p className="p-6 text-sm text-muted-foreground" role="status">
+          <p className="p-6 text-14 text-muted-foreground" role="status">
             Memuat data…
           </p>
         ) : s.query.isError ? (
           <div className="space-y-3 p-5">
-            <p role="alert" className="text-sm text-destructive">
+            <p role="alert" className="text-14 text-destructive">
               {purchasingError(s.query.error)}
             </p>
             <button
@@ -174,7 +176,7 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
                     ? "Belum ada supplier"
                     : "Belum ada pembelian"}
             </p>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-14 text-muted-foreground">
               {view === "stock"
                 ? "Catat pembelian bahan yang sudah diterima untuk menambah stok."
                 : s.search
@@ -186,7 +188,7 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="ui-table min-w-[650px]">
+            <DataTable className="min-w-[650px]">
               <thead>
                 <tr>
                   {(view === "suppliers"
@@ -202,7 +204,7 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
                           "Aksi",
                         ]
                   ).map((h) => (
-                    <th key={h}>{h}</th>
+                    <DataTableHead key={h}>{h}</DataTableHead>
                   ))}
                 </tr>
               </thead>
@@ -212,13 +214,13 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
                     <tr key={item.id}>
                       <th scope="row">
                         <span className="block">{item.name}</span>
-                        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                        <span className="mt-1 block text-13 font-normal text-muted-foreground">
                           {item.code}
                         </span>
                       </th>
                       <td>
                         <span className="block">{item.contact || "—"}</span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-13 text-muted-foreground">
                           {item.phone || item.email || "Belum diisi"}
                         </span>
                       </td>
@@ -254,7 +256,7 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
                     <tr key={`${item.id}-${item.location}`}>
                       <th scope="row">
                         {item.name}
-                        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                        <span className="mt-1 block text-13 font-normal text-muted-foreground">
                           {item.code}
                         </span>
                       </th>
@@ -269,7 +271,7 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
                     <tr key={item.id}>
                       <th scope="row">
                         {item.invoice_number}
-                        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                        <span className="mt-1 block text-13 font-normal text-muted-foreground">
                           {item.number}
                         </span>
                       </th>
@@ -306,11 +308,11 @@ function PurchasingWorkspace(props: PurchasingPageProps) {
                   ),
                 )}
               </tbody>
-            </table>
+            </DataTable>
           </div>
         )}
         {view === "purchases" && Number(s.query.data?.total) > 20 && (
-          <div className="flex items-center justify-between border-t border-border p-4 text-sm">
+          <div className="flex items-center justify-between border-t border-border p-4 text-14">
             <span>
               Halaman {s.page} dari {Math.ceil((s.query.data?.total ?? 0) / 20)}
             </span>

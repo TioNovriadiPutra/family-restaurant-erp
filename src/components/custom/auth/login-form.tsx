@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { TextField } from "@/components/shared/text-field";
 import { Eye, EyeSlash } from "iconsax-reactjs";
 import { SelectInput } from "@/components/shared/select-input";
@@ -7,7 +8,7 @@ export function LoginForm() {
   const { form, submit, session, outlets, outletId, setOutletId, message, pending, showPassword, togglePassword, enter, outletSelectRef } = useLoginForm();
   const { register, formState: { errors } } = form;
   return <>
-    <h1 className="type-28-semibold mt-6">Masuk ke ERP</h1>
+    <PageTitle className="mt-6">Masuk ke ERP</PageTitle>
     <p className="mt-2 text-pretty text-muted-foreground">Gunakan akun petugas yang memiliki akses ERP.</p>
     {session ? <div className="mt-8 space-y-6">
       <p className="ui-alert ui-alert-success" role="status">Akun terverifikasi: {session.user.email}</p>
@@ -19,7 +20,7 @@ export function LoginForm() {
         <p className="ui-help">Hanya outlet yang dapat diakses akun Anda yang ditampilkan.</p>
       </div>
       <button type="button" onClick={enter} className="ui-button ui-button-primary w-full max-sm:min-h-12">Lanjut ke ERP</button>
-    </div> : <form onSubmit={submit} method="post" noValidate className="mt-8 space-y-6" aria-busy={pending}>
+    </div> : <form onSubmit={submit} method="post" noValidate className="mt-8 space-y-6 ui-form" aria-busy={pending}>
       <TextField required id="email" label="Email" type="email" autoComplete="username" inputMode="email" placeholder="nama@restoran.com" maxLength={254} readOnly={pending}
         error={errors.email?.message} {...register("email", { required: "Email wajib diisi.", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Masukkan email yang valid." } })} />
       <div>

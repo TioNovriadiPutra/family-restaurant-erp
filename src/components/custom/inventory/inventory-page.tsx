@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { PageHeader, PageTitle } from '@/components/shared/page-heading';
 import { useRouter } from "next/router";
 import { FormModal } from "@/components/shared/form-modal";
 import Link from "next/link";
@@ -182,21 +184,21 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
     <div className="space-y-5">
       <Link
         href="/persediaan"
-        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        className="inline-flex min-h-11 items-center gap-2 text-14 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft2 size={16} aria-hidden />
         Persediaan
       </Link>
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <PageHeader className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <span className="rounded-xl bg-primary/10 p-3 text-primary">
+          <span className="ui-page-icon">
             <Icon size={23} aria-hidden />
           </span>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">
+            <PageTitle className="">
               {screen.title}
-            </h1>
-            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+            </PageTitle>
+            <p className="mt-1 max-w-2xl text-14 text-muted-foreground">
               {screen.description}
             </p>
           </div>
@@ -245,7 +247,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
             )}
           </div>
         )}
-      </div>
+      </PageHeader>
       {(s.notice || router.query.saved === "1") && (
         <p role="status" className="ui-alert ui-alert-success">
           {s.notice || "Data persediaan berhasil disimpan."}
@@ -253,7 +255,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
       )}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div className="ui-card !p-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             {view === "stock"
               ? "Bahan / lokasi"
               : view === "materials"
@@ -265,7 +267,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
           </p>
         </div>
         <div className="ui-card !p-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             {view === "stock"
               ? "Di bawah minimum"
               : view === "materials"
@@ -283,7 +285,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
           </p>
         </div>
         <div className="ui-card col-span-2 !p-4 sm:col-span-1">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             {view === "stock"
               ? "Nilai persediaan"
               : view === "materials"
@@ -344,11 +346,11 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
         className="ui-card !p-0 overflow-hidden"
         aria-label={`Daftar ${screen.title.toLowerCase()}`}
       >
-        <div className="grid gap-3 border-b border-border p-4 sm:grid-cols-2 lg:grid-cols-[minmax(200px,1fr)_220px_220px]">
+        <div className="ui-filter-bar grid sm:grid-cols-2 lg:grid-cols-[minmax(200px,1fr)_220px_220px]">
           <label className="relative">
             <SearchNormal1
               size={17}
-              className="pointer-events-none absolute left-3 top-3 text-muted-foreground"
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               aria-hidden
             />
             <span className="sr-only">Cari bahan atau dokumen</span>
@@ -392,12 +394,12 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
           )}
         </div>
         {query.isPending ? (
-          <p className="p-6 text-sm text-muted-foreground" role="status">
+          <p className="p-6 text-14 text-muted-foreground" role="status">
             Memuat persediaan…
           </p>
         ) : query.isError ? (
           <div className="space-y-3 p-5">
-            <p role="alert" className="text-sm text-destructive">
+            <p role="alert" className="text-14 text-destructive">
               {inventoryError(query.error)}
             </p>
             <button
@@ -421,7 +423,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
                     ? "Tidak ada dokumen untuk direview"
                     : "Belum ada data pada daftar ini"}
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-14 text-muted-foreground">
               {view === "stock"
                 ? "Tambahkan master bahan dan catat pembelian barang yang sudah diterima."
                 : view === "approvals"
@@ -439,11 +441,11 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="ui-table min-w-[800px]">
+            <DataTable className="min-w-[800px]">
               <thead>
                 <tr>
                   {titles.map((t) => (
-                    <th key={t}>{t}</th>
+                    <DataTableHead key={t}>{t}</DataTableHead>
                   ))}
                 </tr>
               </thead>
@@ -453,7 +455,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
                     <tr key={`${item.id}-${item.location_id}`}>
                       <th scope="row">
                         {item.name}
-                        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                        <span className="mt-1 block text-13 font-normal text-muted-foreground">
                           {item.code}
                         </span>
                       </th>
@@ -466,7 +468,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
                       </td>
                       <td className="whitespace-nowrap tabular-nums">
                         {inventoryMoney(item.inventory_value)}
-                        <span className="mt-1 block text-xs text-muted-foreground">
+                        <span className="mt-1 block text-13 text-muted-foreground">
                           Rata-rata {inventoryMoney(item.average_unit_cost)} /{" "}
                           {item.unit}
                         </span>
@@ -491,20 +493,20 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
                     <tr key={item.id}>
                       <th scope="row">
                         {item.name}
-                        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                        <span className="mt-1 block text-13 font-normal text-muted-foreground">
                           {item.code} · {item.category}
                         </span>
                       </th>
                       <td>
                         {item.unit}
-                        <span className="mt-1 block text-xs text-muted-foreground">
+                        <span className="mt-1 block text-13 text-muted-foreground">
                           {inventoryKind[item.kind] ?? item.kind}
                         </span>
                       </td>
                       <td>
                         {item.policies.length
                           ? item.policies.map((p) => (
-                              <p key={p.locationId} className="text-xs">
+                              <p key={p.locationId} className="text-13">
                                 {p.location}:{" "}
                                 {inventoryQuantity(p.minimumQuantity)}{" "}
                                 {item.unit}
@@ -515,7 +517,7 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
                       <td>
                         {item.conversions.length
                           ? item.conversions.map((c) => (
-                              <p key={c.id} className="text-xs">
+                              <p key={c.id} className="text-13">
                                 1 {c.unit} ={" "}
                                 {inventoryQuantity(c.base_quantity)} {item.unit}
                               </p>
@@ -565,18 +567,18 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
                     <tr key={item.id}>
                       <th scope="row">
                         {item.number}
-                        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                        <span className="mt-1 block text-13 font-normal text-muted-foreground">
                           {inventoryKind[item.kind] ?? item.kind} ·{" "}
                           {item.line_count} bahan
                         </span>
                       </th>
                       <td>
                         {item.location_name}
-                        <span className="mt-1 block text-xs text-muted-foreground">
+                        <span className="mt-1 block text-13 text-muted-foreground">
                           {item.created_by_name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap text-xs">
+                      <td className="whitespace-nowrap text-13">
                         {inventoryDate(
                           view === "counts"
                             ? item.scheduled_at
@@ -608,11 +610,11 @@ function InventoryWorkspace(props: InventoryWorkspaceProps) {
                   ),
                 )}
               </tbody>
-            </table>
+            </DataTable>
           </div>
         )}
         {query.data && query.data.total > 0 && (
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border p-4 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border p-4 text-14 text-muted-foreground">
             <span>
               {(s.filters.page - 1) * 20 + 1}–
               {Math.min(s.filters.page * 20, query.data.total)} dari{" "}

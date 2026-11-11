@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { SectionTitle } from '@/components/shared/page-heading';
 import { FormModal } from "@/components/shared/form-modal";
 import { SelectInput } from "@/components/shared/select-input";
 import { useState } from "react";
@@ -31,11 +33,11 @@ export function PurchaseDetail({
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-sm text-muted-foreground">{purchase.number}</p>
-          <h2 className="mt-1 text-xl font-semibold">
+          <p className="text-14 text-muted-foreground">{purchase.number}</p>
+          <SectionTitle className="mt-1">
             Invoice {purchase.invoice_number}
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          </SectionTitle>
+          <p className="mt-1 text-14 text-muted-foreground">
             {purchase.supplier_name} · {purchase.invoice_date}
           </p>
         </div>
@@ -48,13 +50,13 @@ export function PurchaseDetail({
         </button>
       </div>
       <div className="overflow-x-auto">
-        <table className="ui-table">
+        <DataTable className="">
           <thead>
             <tr>
-              <th>Bahan</th>
-              <th>Jumlah</th>
-              <th>Harga satuan</th>
-              <th>Subtotal</th>
+              <DataTableHead>Bahan</DataTableHead>
+              <DataTableHead>Jumlah</DataTableHead>
+              <DataTableHead>Harga satuan</DataTableHead>
+              <DataTableHead>Subtotal</DataTableHead>
             </tr>
           </thead>
           <tbody>
@@ -69,11 +71,11 @@ export function PurchaseDetail({
               </tr>
             ))}
           </tbody>
-        </table>
+        </DataTable>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             {purchase.payment_status === "paid"
               ? "Lunas"
               : `Belum dibayar · jatuh tempo ${purchase.due_date}`}
@@ -117,13 +119,13 @@ export function PurchaseDetail({
               onClose={() => setConfirm(false)}
             >
               <div aria-busy={pay.isPending} className="space-y-3 p-5">
-                <h2 className="text-lg font-semibold">Catat pelunasan</h2>
-                <p className="text-sm">
+                <SectionTitle className="">Catat pelunasan</SectionTitle>
+                <p className="text-14">
                   Catat pelunasan {purchaseMoney(purchase.total)} melalui sumber
                   dana yang dipilih? Stok sudah diterima dan tidak akan
                   ditambahkan lagi.
                 </p>
-                <label className="mt-3 block max-w-sm text-sm font-medium">
+                <label className="mt-3 block max-w-sm text-14 font-medium">
                   Sumber dana
                   <SelectInput
                     className="ui-input mt-1.5"
@@ -167,7 +169,7 @@ export function PurchaseDetail({
                   </button>
                 </div>
                 {pay.isError && (
-                  <p role="alert" className="text-sm text-destructive">
+                  <p role="alert" className="text-14 text-destructive">
                     {purchasingError(pay.error)}
                   </p>
                 )}

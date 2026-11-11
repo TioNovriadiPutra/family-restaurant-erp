@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import type { ModuleHubProps } from "@/interfaces/module-menu";
 import { useModuleMenu } from "@/hooks/modules/use-module-menu";
 import { ModuleMenuCard } from "@/components/shared/module-menu-card";
@@ -9,7 +10,7 @@ export function ModuleMenu({ moduleSlug, title, session }: ModuleHubProps) {
     <div className="space-y-8">
       <div className="max-w-3xl">
         <p className="mb-2 type-13-regular text-muted-foreground">Area kerja · {outletName}</p>
-        <h1 className="type-28-semibold">{title}</h1>
+        <PageTitle className="">{title}</PageTitle>
         <p className="mt-3 max-w-2xl text-pretty type-16-regular text-muted-foreground">{definition.description}</p>
       </div>
       <section aria-label={`Pilihan menu ${title}`} className="grid auto-rows-fr gap-5 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">

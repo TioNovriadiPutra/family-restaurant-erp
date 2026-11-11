@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { SectionTitle } from '@/components/shared/page-heading';
 import {
   ArrowRight2,
   TickCircle,
@@ -51,10 +53,10 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
     <section className="ui-card space-y-5" aria-label="Detail persediaan">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             {inventoryKind[doc.kind] ?? doc.kind}
           </p>
-          <h2 className="mt-1 text-xl font-semibold">{doc.number}</h2>
+          <SectionTitle className="mt-1">{doc.number}</SectionTitle>
           <span
             className={`ui-badge mt-2 ${doc.status === "posted" ? "ui-badge-success" : doc.status === "pending" ? "ui-badge-warning" : "ui-badge-neutral"}`}
           >
@@ -69,7 +71,7 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
           Tutup detail
         </button>
       </div>
-      <dl className="grid gap-4 rounded-xl bg-secondary/50 p-4 text-sm sm:grid-cols-3">
+      <dl className="grid gap-4 rounded-xl bg-secondary/50 p-4 text-14 sm:grid-cols-3">
         <div>
           <dt className="text-muted-foreground">Lokasi</dt>
           <dd className="mt-1 font-medium">{doc.location_name}</dd>
@@ -88,7 +90,7 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
         </div>
       </dl>
       {doc.reason && (
-        <p className="whitespace-pre-wrap break-words text-sm">{doc.reason}</p>
+        <p className="whitespace-pre-wrap break-words text-14">{doc.reason}</p>
       )}
       {count && doc.status === "draft" && (
         <p className="ui-alert ui-alert-info">
@@ -105,22 +107,22 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
       ) : (
         detail.lines.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="ui-table min-w-[680px]">
+            <DataTable className="min-w-[680px]">
               <thead>
                 <tr>
-                  <th>Bahan</th>
+                  <DataTableHead>Bahan</DataTableHead>
                   {count ? (
                     <>
-                      <th>Saldo awal</th>
-                      <th>Stok sistem saat hitung</th>
-                      <th>Fisik</th>
-                      <th>Selisih</th>
-                      <th>Alasan</th>
+                      <DataTableHead>Saldo awal</DataTableHead>
+                      <DataTableHead>Stok sistem saat hitung</DataTableHead>
+                      <DataTableHead>Fisik</DataTableHead>
+                      <DataTableHead>Selisih</DataTableHead>
+                      <DataTableHead>Alasan</DataTableHead>
                     </>
                   ) : (
                     <>
-                      <th>Perubahan stok</th>
-                      <th>Biaya satuan</th>
+                      <DataTableHead>Perubahan stok</DataTableHead>
+                      <DataTableHead>Biaya satuan</DataTableHead>
                     </>
                   )}
                 </tr>
@@ -130,7 +132,7 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
                   <tr key={l.id}>
                     <th scope="row">
                       {l.name}
-                      <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                      <span className="mt-1 block text-13 font-normal text-muted-foreground">
                         {l.unit}
                       </span>
                     </th>
@@ -168,12 +170,12 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </DataTable>
           </div>
         )
       )}
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border p-4">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-14 text-muted-foreground">
           {doc.status === "posted"
             ? "Nilai koreksi aktual"
             : "Estimasi nilai koreksi"}
@@ -278,7 +280,7 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
       </div>
       {a.cancel && (
         <div className="space-y-3 rounded-xl border border-border bg-secondary/40 p-4">
-          <p className="text-sm">
+          <p className="text-14">
             Batalkan {doc.number}? Dokumen disimpan sebagai riwayat dan tidak
             akan mengubah stok.
           </p>
@@ -303,10 +305,10 @@ export function InventoryDocumentDetail(props: InventoryDetailProps) {
       {a.review && (
         <form
           noValidate
-          className="space-y-4 rounded-xl border border-border bg-secondary/40 p-4"
+          className="space-y-4 rounded-xl border border-border bg-secondary/40 p-4 ui-form"
           onSubmit={a.submitReview}
         >
-          <p className="text-sm font-medium">
+          <p className="text-14 font-medium">
             {a.review === "approve"
               ? "Konfirmasi posting seluruh perubahan stok dan jurnal pada dokumen ini."
               : "Tulis alasan penolakan. Stok tidak akan berubah."}

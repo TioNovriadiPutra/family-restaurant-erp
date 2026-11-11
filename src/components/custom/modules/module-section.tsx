@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import Link from "next/link";
 import { ArrowLeft2 } from "iconsax-reactjs";
 import type { ModuleSectionProps } from "@/interfaces/module-menu";
@@ -17,7 +18,7 @@ export function ModuleSection({ moduleSlug, title, session, sectionSlug }: Modul
       <div className="ui-card">
         <div className="flex items-center gap-4">
           <span className="module-menu-card-icon"><Icon size={24} variant="Linear" aria-hidden="true" /></span>
-          <h1 className="type-28-semibold">{section.title}</h1>
+          <PageTitle className="">{section.title}</PageTitle>
         </div>
         <p className="mt-4 type-16-regular text-muted-foreground">{section.description}</p>
         <p className="ui-alert ui-alert-info mt-6" role="status">

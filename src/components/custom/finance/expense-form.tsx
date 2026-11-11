@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { CurrencyField } from "@/components/shared/currency-field";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
@@ -16,12 +17,12 @@ export function FinanceExpenseForm(p: FinanceFormProps) {
     <form
       noValidate
       aria-busy={s.pending}
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={s.submit}
     >
       <div>
-        <h1 className="text-xl font-semibold">Catat pengeluaran</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <PageTitle className="">Catat pengeluaran</PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Simpan nota biaya operasional. Kas berkurang dan beban tercatat
           setelah disimpan.
         </p>
@@ -115,7 +116,7 @@ export function FinanceExpenseForm(p: FinanceFormProps) {
         </p>
       )}
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-14 text-muted-foreground">
           Pembelian bahan dicatat melalui menu Pembelian.
         </p>
         <div className="flex gap-2">

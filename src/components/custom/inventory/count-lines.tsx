@@ -12,9 +12,9 @@ export function InventoryCountLines(props: InventoryCountEditorProps) {
       aria-busy={command.pending}
       noValidate
       onSubmit={submit}
-      className="space-y-4"
+      className="space-y-4 ui-form"
     >
-      <p className="text-sm text-muted-foreground">
+      <p className="text-14 text-muted-foreground">
         Masukkan hasil fisik dalam satuan stok. Kosong berarti belum dihitung;
         masukkan 0 bila habis. Alasan wajib untuk setiap selisih. Simpan
         sementara untuk melanjutkan nanti.
@@ -27,14 +27,14 @@ export function InventoryCountLines(props: InventoryCountEditorProps) {
           >
             <div>
               <p className="font-medium">{l.name}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-13 text-muted-foreground">
                 Saldo awal {inventoryQuantity(l.snapshot)} {l.unit}
               </p>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-13 text-muted-foreground">
                 Stok sistem terakhir {inventoryQuantity(l.expected)} {l.unit}
               </p>
               {l.variance != null && (
-                <p className="mt-1 text-xs font-medium">
+                <p className="mt-1 text-13 font-medium">
                   Selisih tersimpan {inventoryQuantity(l.variance)} {l.unit}
                 </p>
               )}
@@ -85,7 +85,7 @@ export function InventoryCountLines(props: InventoryCountEditorProps) {
               rules={inventoryDecimalRule}
             />
             {l.counted != null && (
-              <label className="flex min-h-11 items-center gap-3 text-xs text-muted-foreground sm:col-span-2 lg:col-span-4">
+              <label className="flex min-h-11 items-center gap-3 text-13 text-muted-foreground sm:col-span-2 lg:col-span-4">
                 <input
                   type="checkbox"
                   className="size-4 accent-primary"

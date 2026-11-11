@@ -1,3 +1,4 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
 import { useState } from "react";
 import {
   useFinanceRead,
@@ -22,13 +23,13 @@ export function FinanceSupplierTable(p: FinanceSupplierProps) {
     <>
       {q.data && (
         <div className="grid gap-3 border-y border-border bg-secondary/30 p-4 sm:grid-cols-2">
-          <p className="text-sm">
+          <p className="text-14">
             Utang sesuai filter{" "}
             <strong className="ml-2">
               {financeCurrency(q.data.summary?.outstanding ?? 0)}
             </strong>
           </p>
-          <p className="text-sm">
+          <p className="text-14">
             Invoice lunas{" "}
             <strong className="ml-2">
               {financeCurrency(q.data.summary?.paid ?? 0)}
@@ -53,13 +54,13 @@ export function FinanceSupplierTable(p: FinanceSupplierProps) {
           </button>
         </div>
       ) : !q.data?.items.length ? (
-        <p className="p-8 text-center text-sm text-muted-foreground">
+        <p className="p-8 text-center text-14 text-muted-foreground">
           Belum ada invoice pembelian sesuai filter.
         </p>
       ) : (
         <>
           <div className="overflow-x-auto">
-            <table className="ui-table min-w-[760px]">
+            <DataTable className="min-w-[760px]">
               <thead>
                 <tr>
                   {[
@@ -70,7 +71,7 @@ export function FinanceSupplierTable(p: FinanceSupplierProps) {
                     "Pembayaran",
                     "Aksi",
                   ].map((h) => (
-                    <th key={h}>{h}</th>
+                    <DataTableHead key={h}>{h}</DataTableHead>
                   ))}
                 </tr>
               </thead>
@@ -79,7 +80,7 @@ export function FinanceSupplierTable(p: FinanceSupplierProps) {
                   <tr key={i.id}>
                     <th scope="row">
                       {i.invoice_number}
-                      <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                      <span className="mt-1 block text-13 font-normal text-muted-foreground">
                         {i.supplier_name}
                       </span>
                     </th>
@@ -112,9 +113,9 @@ export function FinanceSupplierTable(p: FinanceSupplierProps) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </DataTable>
           </div>
-          <div className="flex items-center justify-between gap-3 border-t border-border p-4 text-sm">
+          <div className="flex items-center justify-between gap-3 border-t border-border p-4 text-14">
             <span>
               {q.data.total} invoice / Halaman {p.filters.page}
             </span>

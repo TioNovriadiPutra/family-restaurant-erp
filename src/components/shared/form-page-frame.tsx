@@ -7,7 +7,7 @@ export function FormPageFrame({
   children,
 }: FormPageFrameProps) {
   return (
-    <div className="space-y-4">
+    <div className="ui-form-page">
       <Link
         href={backHref}
         onClick={(event) => {
@@ -18,7 +18,7 @@ export function FormPageFrame({
           )
             event.preventDefault();
         }}
-        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        className="inline-flex min-h-11 items-center gap-2 text-14 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft2 size={16} aria-hidden />
         {backLabel}

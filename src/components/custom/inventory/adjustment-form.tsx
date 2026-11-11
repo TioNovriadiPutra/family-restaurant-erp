@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { CurrencyField } from "@/components/shared/currency-field";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { Add, Trash } from "iconsax-reactjs";
@@ -41,7 +42,7 @@ export function InventoryAdjustmentEditor({
     <form
       aria-busy={command.pending}
       noValidate
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={form.handleSubmit(async (v) => {
         try {
           const data = {
@@ -67,14 +68,14 @@ export function InventoryAdjustmentEditor({
       })}
     >
       <div>
-        <h1 className="text-lg font-semibold">
+        <PageTitle className="">
           {detail
             ? "Edit draf"
             : waste
               ? "Catat bahan terbuang"
               : "Buat koreksi stok"}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        </PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Draf belum mengubah stok. Dokumen harus diajukan dan disetujui petugas
           lain.{!waste && " Pembelian barang tetap dicatat di menu Pembelian."}
         </p>
@@ -199,7 +200,7 @@ export function InventoryAdjustmentEditor({
                     </FormSelect>
                   </div>
                 ) : (
-                  <div className="self-center text-sm text-muted-foreground">
+                  <div className="self-center text-14 text-muted-foreground">
                     Stok akan berkurang setelah disetujui.
                   </div>
                 )}

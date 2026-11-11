@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { SectionTitle } from '@/components/shared/page-heading';
 import { Book1, Edit2, Clock, TickCircle } from "iconsax-reactjs";
 import {
   recipeDate,
@@ -37,7 +39,7 @@ export function RecipeDetailPanel(props: RecipeDetailProps) {
     <section aria-label="Detail resep" className="space-y-4">
       <div className="ui-card flex flex-wrap items-start justify-between gap-4">
         <div>
-          <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="mb-2 flex items-center gap-2 text-14 text-muted-foreground">
             <Book1 size={18} aria-hidden />
             {r.code} · Versi {r.version}
             <span
@@ -49,8 +51,8 @@ export function RecipeDetailPanel(props: RecipeDetailProps) {
               <span className="ui-badge ui-badge-warning">Nonaktif</span>
             )}
           </div>
-          <h2 className="text-xl font-semibold">{r.name}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <SectionTitle className="">{r.name}</SectionTitle>
+          <p className="mt-1 text-14 text-muted-foreground">
             {r.category} · Hasil {recipeQuantity(r.yield)} {r.unit}
             {r.output_name ? ` · Produksi ${r.output_name}` : " · Resep sajian"}
           </p>
@@ -85,11 +87,11 @@ export function RecipeDetailPanel(props: RecipeDetailProps) {
                 ? "Belum lengkap"
                 : recipeMoney(c.perOutput)}
             </p>
-            <p className="mt-2 text-xs text-muted-foreground">
+            <p className="mt-2 text-13 text-muted-foreground">
               Estimasi saat ini · rata-rata tertimbang outlet
             </p>
           </div>
-          <dl className="space-y-2 text-sm">
+          <dl className="space-y-2 text-14">
             <div className="flex justify-between gap-3">
               <dt>Total bahan</dt>
               <dd>{c.total === null ? "—" : recipeMoney(c.total)}</dd>
@@ -127,7 +129,7 @@ export function RecipeDetailPanel(props: RecipeDetailProps) {
               </dd>
             </div>
           </dl>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-13 text-muted-foreground">
             Belum termasuk gaji, sewa, pajak, dan biaya operasional. Harga acuan
             tidak mengubah harga menu.
           </p>
@@ -183,17 +185,17 @@ export function RecipeDetailPanel(props: RecipeDetailProps) {
           </div>
         </aside>
       </div>
-      {r.notes && <p className="ui-card text-sm">{r.notes}</p>}
+      {r.notes && <p className="ui-card text-14">{r.notes}</p>}
       <div className="ui-table-container">
-        <table className="ui-table min-w-[680px]">
+        <DataTable className="min-w-[680px]">
           <caption className="p-4 text-left font-semibold">Versi resep</caption>
           <thead>
             <tr>
-              <th scope="col">Versi</th>
-              <th scope="col">Hasil</th>
-              <th scope="col">Status</th>
-              <th scope="col">Dibuat</th>
-              <th scope="col">Berlaku mulai</th>
+              <DataTableHead scope="col">Versi</DataTableHead>
+              <DataTableHead scope="col">Hasil</DataTableHead>
+              <DataTableHead scope="col">Status</DataTableHead>
+              <DataTableHead scope="col">Dibuat</DataTableHead>
+              <DataTableHead scope="col">Berlaku mulai</DataTableHead>
             </tr>
           </thead>
           <tbody>
@@ -209,7 +211,7 @@ export function RecipeDetailPanel(props: RecipeDetailProps) {
               </tr>
             ))}
           </tbody>
-        </table>
+        </DataTable>
       </div>
     </section>
   );

@@ -59,6 +59,7 @@ export const moduleMenus: Partial<Record<string, ModuleDefinition>> = {
     description: "Kelola konfigurasi restoran dan aturan operasional yang berlaku di outlet.",
     sections: [
       { slug: "restoran-outlet", permission: "organization.read", title: "Restoran & outlet", description: "Atur informasi restoran, zona waktu, serta kebijakan pajak dan layanan.", icon: Shop, designNode: 2607 },
+      { slug: "meja", permission: "menu.read", title: "Meja", description: "Atur kode, jumlah kursi, dan meja aktif yang tersedia di POS.", icon: Layer, designNode: 13271 },
       { slug: "menu-harga", title: "Menu & harga", description: "Tinjau produk jual, hubungan resep, dan harga yang berlaku pada outlet.", icon: Book1, permission: "menu.read", designNode: 2713 },
       { slug: "pembayaran-struk", permission: "organization.read", title: "Pembayaran & struk", description: "Atur metode pembayaran dan preferensi struk cetak maupun digital.", icon: ReceiptText, designNode: 2607 },
       { slug: "hak-akses", title: "Karyawan & hak akses", description: "Tinjau peran, permission, dan penugasan karyawan pada masing-masing outlet.", icon: ShieldTick, permission: "rbac.read", designNode: 2649 },

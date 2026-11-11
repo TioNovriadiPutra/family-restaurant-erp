@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import { useForm } from "react-hook-form";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
@@ -20,7 +21,7 @@ export function InventoryCountEditor({
     <form
       aria-busy={command.pending}
       noValidate
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={form.handleSubmit(async (data) => {
         try {
           onSaved(
@@ -37,8 +38,8 @@ export function InventoryCountEditor({
       })}
     >
       <div>
-        <h2 className="text-lg font-semibold">Jadwalkan stock opname</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <SectionTitle className="">Jadwalkan stock opname</SectionTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Semua bahan aktif di lokasi ini diambil saat mulai hitung. Saldo awal
           belum dibuat ketika menyimpan jadwal.
         </p>

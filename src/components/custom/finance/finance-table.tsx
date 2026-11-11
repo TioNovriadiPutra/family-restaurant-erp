@@ -1,3 +1,4 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
 import {
   financeCurrency,
   financeDate,
@@ -41,11 +42,11 @@ export function FinanceTable({
             ];
   return (
     <div className="overflow-x-auto">
-      <table className="ui-table min-w-[740px]">
+      <DataTable className="min-w-[740px]">
         <thead>
           <tr>
             {headers.map((h) => (
-              <th key={h}>{h}</th>
+              <DataTableHead key={h}>{h}</DataTableHead>
             ))}
           </tr>
         </thead>
@@ -54,12 +55,12 @@ export function FinanceTable({
             <tr key={row.id}>
               {view === "movements" ? (
                 <>
-                  <td className="whitespace-nowrap text-xs">
+                  <td className="whitespace-nowrap text-13">
                     {financeDate(row.date)}
                   </td>
                   <th scope="row">
                     <span className="block">{row.number}</span>
-                    <span className="mt-1 block max-w-sm truncate text-xs font-normal text-muted-foreground">
+                    <span className="mt-1 block max-w-sm truncate text-13 font-normal text-muted-foreground">
                       {row.reference}
                     </span>
                   </th>
@@ -77,16 +78,16 @@ export function FinanceTable({
                 </>
               ) : view === "journals" ? (
                 <>
-                  <td className="whitespace-nowrap text-xs">
+                  <td className="whitespace-nowrap text-13">
                     {financeDate(row.date)}
                   </td>
                   <th scope="row">
                     {row.number}
-                    <span className="mt-1 block max-w-sm truncate text-xs font-normal text-muted-foreground">
+                    <span className="mt-1 block max-w-sm truncate text-13 font-normal text-muted-foreground">
                       {row.description}
                     </span>
                   </th>
-                  <td className="text-xs">{financeSourceLabel(row.source)}</td>
+                  <td className="text-13">{financeSourceLabel(row.source)}</td>
                   <td className="whitespace-nowrap tabular-nums">
                     {financeCurrency(row.debit ?? 0)}
                   </td>
@@ -106,7 +107,7 @@ export function FinanceTable({
                 <>
                   <th scope="row">
                     {row.number}
-                    <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                    <span className="mt-1 block text-13 font-normal text-muted-foreground">
                       {financeDate(row.date)}
                     </span>
                   </th>
@@ -134,7 +135,7 @@ export function FinanceTable({
                 <>
                   <th scope="row">
                     {row.number}
-                    <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                    <span className="mt-1 block text-13 font-normal text-muted-foreground">
                       {financeDate(row.date)}
                     </span>
                   </th>
@@ -155,7 +156,7 @@ export function FinanceTable({
             </tr>
           ))}
         </tbody>
-      </table>
+      </DataTable>
     </div>
   );
 }

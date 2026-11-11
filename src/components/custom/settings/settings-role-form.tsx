@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { useSettingsForm } from "@/hooks/settings/use-settings-form";
 import { TextField } from "@/components/shared/text-field";
 import type { SettingsRoleUiProps } from "@/interfaces/settings-role-ui";
@@ -9,11 +10,11 @@ export function SettingsRoleForm(p: SettingsRoleUiProps) {
   });
   return (
     <form
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       aria-busy={command.pending}
       onSubmit={submit}
     >
-      <h1 className="text-xl font-semibold">{p.spec.title}</h1>
+      <PageTitle className="">{p.spec.title}</PageTitle>
       <fieldset disabled={command.pending} className="space-y-5">
         <TextField
           id="discountPercent"
@@ -25,7 +26,7 @@ export function SettingsRoleForm(p: SettingsRoleUiProps) {
           {p.permissions.map((permission) => (
             <label
               key={permission.code}
-              className="flex items-start gap-3 rounded-lg border border-border p-3 text-sm"
+              className="flex items-start gap-3 rounded-lg border border-border p-3 text-14"
             >
               <input
                 type="checkbox"

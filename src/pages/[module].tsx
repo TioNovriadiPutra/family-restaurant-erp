@@ -1,3 +1,4 @@
+import { PageTitle } from "@/components/shared/page-heading";
 import Head from "next/head";
 import Link from "next/link";
 import type { GetServerSideProps } from "next";
@@ -19,7 +20,7 @@ export const getServerSideProps: GetServerSideProps<ErpPageProps> = async contex
 const ModulePage: ErpPage = ({ session, unavailable, forbidden, module, moduleSlug }) => {
   if (unavailable || !session || forbidden) return <PageState forbidden={forbidden} />;
   return <><Head><title>{`${module} · Dapur Keluarga`}</title></Head>
-    {moduleSlug && moduleMenus[moduleSlug] ? <ModuleMenu moduleSlug={moduleSlug} title={module ?? ""} session={session} /> : <div className="ui-card max-w-2xl"><h1 className="type-28-semibold">{module}</h1>
+    {moduleSlug && moduleMenus[moduleSlug] ? <ModuleMenu moduleSlug={moduleSlug} title={module ?? ""} session={session} /> : <div className="ui-card max-w-2xl"><PageTitle>{module}</PageTitle>
       <p className="mt-4 text-muted-foreground">Modul {module?.toLowerCase()} belum diimplementasikan. Anda dapat menggunakan ringkasan operasional yang tersedia di halaman home.</p>
       <Link href="/" className="ui-button ui-button-secondary mt-6">Kembali ke ringkasan</Link>
     </div>}

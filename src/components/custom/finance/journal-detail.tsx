@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { SectionTitle } from '@/components/shared/page-heading';
 import {
   useFinanceRead,
   financeCurrency,
@@ -12,7 +14,7 @@ export function FinanceJournalDetail(p: FinanceJournalProps) {
   return (
     <section className="space-y-4 p-5">
       <div className="flex items-start justify-between gap-3">
-        <h2 className="text-lg font-semibold">Detail jurnal</h2>
+        <SectionTitle className="">Detail jurnal</SectionTitle>
         <button className="ui-button ui-button-secondary" onClick={p.onClose}>
           Tutup
         </button>
@@ -34,17 +36,17 @@ export function FinanceJournalDetail(p: FinanceJournalProps) {
           <>
             <div>
               <p className="font-medium">{q.data.number}</p>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-14 text-muted-foreground">
                 {financeDate(q.data.date)} / {q.data.description}
               </p>
             </div>
             <div className="overflow-x-auto">
-              <table className="ui-table min-w-[540px]">
+              <DataTable className="min-w-[540px]">
                 <thead>
                   <tr>
-                    <th>Akun</th>
-                    <th>Debit</th>
-                    <th>Kredit</th>
+                    <DataTableHead>Akun</DataTableHead>
+                    <DataTableHead>Debit</DataTableHead>
+                    <DataTableHead>Kredit</DataTableHead>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,7 +54,7 @@ export function FinanceJournalDetail(p: FinanceJournalProps) {
                     <tr key={l.id}>
                       <th scope="row">
                         {l.name}
-                        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                        <span className="mt-1 block text-13 font-normal text-muted-foreground">
                           {l.code}
                         </span>
                       </th>
@@ -65,7 +67,7 @@ export function FinanceJournalDetail(p: FinanceJournalProps) {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </DataTable>
             </div>
             <p className="ui-help">
               Jurnal berasal dari dokumen transaksi yang diposting. Koreksi

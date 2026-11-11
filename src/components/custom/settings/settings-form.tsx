@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { CurrencyField } from "@/components/shared/currency-field";
 import { useSettingsForm } from "@/hooks/settings/use-settings-form";
 import { TextField } from "@/components/shared/text-field";
@@ -32,11 +33,11 @@ export function SettingsForm(p: SettingsGenericFormProps) {
     <form
       onSubmit={submit}
       aria-busy={command.pending}
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
     >
       <div>
-        <h1 className="text-xl font-semibold">{p.spec.title}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <PageTitle className="">{p.spec.title}</PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Kolom bertanda bintang wajib diisi.
         </p>
       </div>
@@ -74,7 +75,7 @@ export function SettingsForm(p: SettingsGenericFormProps) {
           ) : f.type === "checkbox" ? (
             <label
               key={f.key}
-              className="flex min-h-11 items-center gap-3 rounded-lg border border-border px-3 text-sm"
+              className="flex min-h-11 items-center gap-3 rounded-lg border border-border px-3 text-14"
             >
               <input type="checkbox" {...form.register(f.key)} />
               {f.label}

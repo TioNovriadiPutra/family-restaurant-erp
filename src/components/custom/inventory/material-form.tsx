@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { useForm } from "react-hook-form";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
@@ -36,7 +37,7 @@ export function InventoryMaterialEditor({
     <form
       aria-busy={command.pending}
       noValidate
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={form.handleSubmit(async (value) => {
         try {
           onSaved(await command.run("material", { ...value }));
@@ -46,10 +47,10 @@ export function InventoryMaterialEditor({
       })}
     >
       <div>
-        <h1 className="text-lg font-semibold">
+        <PageTitle className="">
           {material ? "Edit bahan" : "Tambah bahan"}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        </PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Master bahan tidak menambah stok. Catat barang diterima melalui
           Pembelian.
         </p>
@@ -151,7 +152,7 @@ export function InventoryMaterialEditor({
           error={errors.minimumQuantity?.message}
           {...register("minimumQuantity", inventoryNonnegativeRule)}
         />
-        <label className="flex min-h-11 items-center gap-3 rounded-lg border border-border px-3 text-sm">
+        <label className="flex min-h-11 items-center gap-3 rounded-lg border border-border px-3 text-14">
           <input
             type="checkbox"
             className="size-4 accent-primary"

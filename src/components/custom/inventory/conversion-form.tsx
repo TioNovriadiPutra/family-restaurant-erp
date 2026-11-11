@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import { useForm } from "react-hook-form";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
@@ -24,7 +25,7 @@ export function InventoryConversionEditor({
     <form
       aria-busy={command.pending}
       noValidate
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={form.handleSubmit(async (data) => {
         try {
           onSaved(
@@ -36,10 +37,10 @@ export function InventoryConversionEditor({
       })}
     >
       <div>
-        <h2 className="text-lg font-semibold">
+        <SectionTitle className="">
           Konversi satuan · {material.name}
-        </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        </SectionTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           1 satuan pembelian sama dengan berapa {material.unit}? Versi baru
           berlaku untuk transaksi berikutnya.
         </p>

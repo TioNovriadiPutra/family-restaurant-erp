@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import { useRouter } from "next/router";
 import { getAccessView } from "@/controller/auth/access-view";
 import { useErpUiState } from "@/stores/erp-ui-store";
@@ -129,11 +130,11 @@ function Editor(p: SettingsWorkspaceProps) {
       />
       {p.view === "menus" && detail.data && (
         <section className="ui-card">
-          <h2 className="mb-3 font-semibold">Riwayat harga</h2>
+          <SectionTitle className="mb-3">Riwayat harga</SectionTitle>
           {detail.data.prices.map((price) => (
             <p
               key={price.id}
-              className="border-b border-border py-3 text-sm"
+              className="border-b border-border py-3 text-14"
             >{`${settingsMoney(price.amount)} / ${settingsDate(price.valid_from)} / ${price.reason}${price.cancelled_at ? " (dibatalkan)" : ""}`}</p>
           ))}
         </section>

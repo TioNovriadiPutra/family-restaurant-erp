@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { CurrencyField } from "@/components/shared/currency-field";
 import { Add, Trash } from "iconsax-reactjs";
 import { TextField } from "@/components/shared/text-field";
@@ -24,14 +25,14 @@ export function RecipeEditor(props: RecipeEditorProps) {
     <form
       aria-busy={s.command.pending}
       noValidate
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={s.submit}
     >
       <div>
-        <h1 className="text-lg font-semibold">
+        <PageTitle className="">
           {props.detail ? "Buat versi resep baru" : "Tambah resep"}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        </PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Simpan sebagai draf, periksa HPP, lalu terbitkan. Versi sebelumnya
           tetap tersimpan.
         </p>
@@ -81,7 +82,7 @@ export function RecipeEditor(props: RecipeEditorProps) {
                   </option>
                 ))}
             </FormSelect>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-13 text-muted-foreground">
               Untuk bumbu/setengah jadi, buat bahan hasilnya di Master bahan
               terlebih dahulu.
             </p>
@@ -112,7 +113,7 @@ export function RecipeEditor(props: RecipeEditorProps) {
                 </option>
               ))}
             </FormSelect>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-13 text-muted-foreground">
               Seluruh bahan di bawah menghasilkan jumlah bersih ini.
             </p>
           </div>
@@ -264,7 +265,7 @@ export function RecipeEditor(props: RecipeEditorProps) {
         </p>
       )}
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-14 text-muted-foreground">
           Harga acuan tidak mengubah harga jual menu POS.
         </p>
         <div className="flex gap-3">

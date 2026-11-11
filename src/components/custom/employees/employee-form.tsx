@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import Link from "next/link";
 import { ArrowLeft2 } from "iconsax-reactjs";
 import type { EmployeeFormProps } from "@/interfaces/employees";
@@ -20,7 +21,7 @@ export function EmployeeForm({ outletId, outletName }: EmployeeFormProps) {
         Kembali ke karyawan
       </Link>
       <div>
-        <h1 className="type-28-semibold">Tambah karyawan</h1>
+        <PageTitle className="">Tambah karyawan</PageTitle>
         <p className="mt-2 text-muted-foreground">
           Isi data dasar karyawan, lalu pilih role dan status · {outletName}
         </p>
@@ -30,7 +31,7 @@ export function EmployeeForm({ outletId, outletName }: EmployeeFormProps) {
         onSubmit={submit}
         noValidate
         aria-busy={pending}
-        className="space-y-4"
+        className="space-y-4 ui-form"
       >
         <div className="ui-card space-y-4">
           <EmployeeFields

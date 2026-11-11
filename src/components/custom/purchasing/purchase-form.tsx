@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { CurrencyField } from "@/components/shared/currency-field";
 import { FormModal } from "@/components/shared/form-modal";
 import { RequiredMark } from "@/components/shared/required-mark";
@@ -25,7 +26,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
         <FormModal label="Bahan baku baru" onClose={() => setAdding(false)}>
           <form
             aria-busy={create.isPending}
-            className="ui-card space-y-3 p-5"
+            className="ui-card space-y-3 p-5 ui-form ui-form-panel"
             onSubmit={material.handleSubmit(async (data) => {
               try {
                 await create.mutateAsync({
@@ -42,7 +43,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
           >
             <h3 className="font-semibold">Bahan baku baru</h3>
             <div className="grid gap-3 sm:grid-cols-2">
-              <label className="text-sm">
+              <label className="text-14">
                 Nama bahan
                 <RequiredMark />
                 <input
@@ -58,7 +59,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                   required
                 />
               </label>
-              <label className="text-sm">
+              <label className="text-14">
                 Satuan stok
                 <RequiredMark />
                 <FormSelect
@@ -93,12 +94,12 @@ export function PurchaseEditor(props: PurchaseFormProps) {
               </div>
             </div>
             {Object.keys(material.formState.errors).length > 0 && (
-              <p role="alert" className="text-sm text-destructive">
+              <p role="alert" className="text-14 text-destructive">
                 Isi nama bahan minimal 2 karakter dan pilih satuan stok.
               </p>
             )}
             {create.isError && (
-              <p role="alert" className="text-sm text-destructive">
+              <p role="alert" className="text-14 text-destructive">
                 {purchasingError(create.error)}
               </p>
             )}
@@ -107,12 +108,12 @@ export function PurchaseEditor(props: PurchaseFormProps) {
       )}
       <form
         aria-busy={state.pending}
-        className="ui-card space-y-6 p-5 sm:p-6"
+        className="ui-card space-y-6 p-5 sm:p-6 ui-form ui-form-panel"
         onSubmit={state.submit}
       >
         <div>
-          <h1 className="text-lg font-semibold">Catat pembelian bahan</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <PageTitle className="">Catat pembelian bahan</PageTitle>
+          <p className="mt-1 text-14 text-muted-foreground">
             Untuk barang yang sudah diterima. Stok bertambah setelah pembelian
             disimpan.
           </p>
@@ -122,7 +123,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
           className="space-y-6 disabled:opacity-70"
         >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <label className="space-y-1.5 text-sm font-medium">
+            <label className="space-y-1.5 text-14 font-medium">
               Supplier
               <RequiredMark />
               <FormSelect
@@ -146,7 +147,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                 ))}
               </FormSelect>
             </label>
-            <label className="space-y-1.5 text-sm font-medium">
+            <label className="space-y-1.5 text-14 font-medium">
               Nomor invoice
               <RequiredMark />
               <input
@@ -162,7 +163,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                 placeholder="Sesuai invoice supplier"
               />
             </label>
-            <label className="space-y-1.5 text-sm font-medium">
+            <label className="space-y-1.5 text-14 font-medium">
               Tanggal invoice
               <RequiredMark />
               <input
@@ -179,7 +180,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                 required
               />
             </label>
-            <label className="space-y-1.5 text-sm font-medium">
+            <label className="space-y-1.5 text-14 font-medium">
               Jatuh tempo
               <RequiredMark />
               <input
@@ -195,7 +196,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                 required
               />
             </label>
-            <label className="space-y-1.5 text-sm font-medium">
+            <label className="space-y-1.5 text-14 font-medium">
               Lokasi stok
               <FormSelect
                 className="ui-input"
@@ -211,7 +212,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                 ))}
               </FormSelect>
             </label>
-            <label className="space-y-1.5 text-sm font-medium">
+            <label className="space-y-1.5 text-14 font-medium">
               Status pembayaran
               <RequiredMark />
               <FormSelect
@@ -247,7 +248,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                   key={field.id}
                   className="grid items-end gap-3 rounded-xl border border-border bg-background/50 p-3 sm:grid-cols-2 lg:grid-cols-[minmax(150px,2fr)_90px_110px_minmax(110px,1fr)_44px]"
                 >
-                  <label className="text-sm font-medium">
+                  <label className="text-14 font-medium">
                     Bahan
                     <RequiredMark />
                     <FormSelect
@@ -273,7 +274,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                       ))}
                     </FormSelect>
                   </label>
-                  <label className="text-sm font-medium">
+                  <label className="text-14 font-medium">
                     Satuan
                     <RequiredMark />
                     <FormSelect
@@ -291,7 +292,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                       ))}
                     </FormSelect>
                   </label>
-                  <label className="text-sm font-medium">
+                  <label className="text-14 font-medium">
                     Jumlah
                     <RequiredMark />
                     <input
@@ -309,7 +310,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                       required
                     />
                   </label>
-                  <label className="text-sm font-medium">
+                  <label className="text-14 font-medium">
                     Harga per satuan
                     <RequiredMark />
                     <CurrencyField
@@ -356,7 +357,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
             </button>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="text-sm font-medium">
+            <label className="text-14 font-medium">
               Bukti invoice
               <RequiredMark />
               <input
@@ -366,12 +367,12 @@ export function PurchaseEditor(props: PurchaseFormProps) {
                 required
                 onChange={(e) => state.setFile(e.target.files?.[0])}
               />
-              <span className="mt-1 block text-xs font-normal text-muted-foreground">
+              <span className="mt-1 block text-13 font-normal text-muted-foreground">
                 PDF, JPG atau PNG, maksimal 8 MB.
               </span>
             </label>
             {state.values.paymentStatus === "paid" && (
-              <label className="text-sm font-medium">
+              <label className="text-14 font-medium">
                 Dibayar melalui
                 <FormSelect
                   className="ui-input mt-1.5"
@@ -403,7 +404,7 @@ export function PurchaseEditor(props: PurchaseFormProps) {
         )}
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-5">
           <div>
-            <p className="text-sm text-muted-foreground">Total pembelian</p>
+            <p className="text-14 text-muted-foreground">Total pembelian</p>
             <p className="text-xl font-semibold tabular-nums">
               {purchaseMoney(state.total)}
             </p>

@@ -219,3 +219,26 @@ No open-source license has been declared in this repository.
 [Getting started](#getting-started) · [Development guide](docs/DEVELOPMENT.md) · [Back to top](#family-restaurant-erp)
 
 </div>
+
+
+### Pengaturan meja
+
+Buka **Pengaturan > Meja** untuk menambah/edit kode, kapasitas dan status aktif meja POS melalui modal singkat. Status terisi/tagihan mengikuti transaksi secara otomatis. Meja dengan pesanan berjalan tidak dapat diubah; nonaktifkan meja yang tidak digunakan untuk menjaga riwayat. Implementasi mengikuti API > services > controller > hooks/components dan Supabase RPC/RLS. Migration `20261110115156_dining_table_settings.sql` sudah diterapkan. Sepuluh meja awal M01-M10 dibuat melalui form dan diverifikasi pada POS.
+
+
+### Modern Hospitality UI
+
+Refresh pertama ERP mencakup token warna semantik, sidebar, header, ringkasan harian, grafik penjualan, tindak lanjut dan aktivitas. Tampilan memakai Inter, latar stone, surface putih, dan aksen hijau; CSS bersama memperbarui fondasi formulir/tabel di modul lain. Komposisi detail setiap modul tetap menggunakan workflow yang sudah ada. Layar menengah memakai dua kolom metrik; ponsel satu kolom dengan navigasi dialog.
+
+Pedoman frontend: gunakan Taste sesuai `AGENTS.md`. Referensi lintas aplikasi: `../family-restaurant-shared/design/HOSPITALITY-REFRESH.md`; perubahan palet POS masih tahap berikutnya. Pemeriksaan browser memakai aplikasi Next.js dengan backend fixture terisolasi di loopback, bukan data/otorisasi Supabase hosted.
+
+Validasi refresh: lint, typecheck, 12 tests, build produksi dan interaksi browser pada data fixture lolos. Audit performa produksi mencatat 0 FAIL dan 2 WARN ukuran JavaScript. Batasan gate visual Taste dan cakupan pemeriksaan: [catatan review UI](docs/ui-refresh.md).
+
+
+### Revisi UI berdasarkan referensi pengguna (ERP saja)
+
+Arah visual terbaru memakai putih, teal dan oranye: kartu ringkasan terpisah, grafik tujuh hari berdampingan dengan performa menu, serta estimasi laba/tindak lanjut/aktivitas di bagian bawah. Header memiliki pencarian navigasi sesuai izin akun. Ini menggantikan arah stone sebelumnya; data dashboard, API, Auth/RBAC dan flow bisnis tetap dipertahankan. POS tidak diubah.
+
+Catatan revisi referensi dan validasi terbaru: [ERP reference redesign](docs/ui-reference-refresh.md).
+
+Penerapan desain kini mencakup halaman seluruh modul, formulir, detail, dialog dan Login: [cakupan UI ERP](docs/ui-all-pages.md).

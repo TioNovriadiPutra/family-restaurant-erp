@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import { useForm } from "react-hook-form";
 import {
   purchasingError,
@@ -34,7 +35,7 @@ export function SupplierEditor({
     <form
       aria-busy={mutation.isPending}
       noValidate
-      className="ui-card space-y-5 p-5 sm:p-6"
+      className="ui-card space-y-5 p-5 sm:p-6 ui-form ui-form-panel"
       onSubmit={form.handleSubmit(async (data) => {
         try {
           await mutation.mutateAsync({
@@ -49,10 +50,10 @@ export function SupplierEditor({
       })}
     >
       <div>
-        <h2 className="text-lg font-semibold">
+        <SectionTitle className="">
           {supplier ? "Edit supplier" : "Tambah supplier"}
-        </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        </SectionTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Kontak pemasok dan tempo pembayaran bahan baku.
         </p>
       </div>
@@ -116,7 +117,7 @@ export function SupplierEditor({
               Number.isInteger(value) || "Gunakan jumlah hari bulat.",
           })}
         />
-        <label className="flex min-h-11 items-center gap-3 self-end rounded-lg border border-border px-3 text-sm">
+        <label className="flex min-h-11 items-center gap-3 self-end rounded-lg border border-border px-3 text-14">
           <input
             type="checkbox"
             className="size-4 accent-primary"

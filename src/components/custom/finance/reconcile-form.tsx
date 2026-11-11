@@ -1,3 +1,4 @@
+import { SectionTitle, PageTitle } from '@/components/shared/page-heading';
 import { CurrencyField } from "@/components/shared/currency-field";
 import { FormSelect } from "@/components/shared/form-select";
 import { RequiredMark } from "@/components/shared/required-mark";
@@ -21,9 +22,9 @@ function Allocations({
 }: FinanceAllocationProps) {
   return (
     <section className="min-w-0 space-y-3">
-      <h2 className="font-semibold">{title}</h2>
+      <SectionTitle className="">{title}</SectionTitle>
       {!items.length ? (
-        <p className="rounded-control border border-dashed border-border p-5 text-sm text-muted-foreground">
+        <p className="rounded-control border border-dashed border-border p-5 text-14 text-muted-foreground">
           Tidak ada transaksi tersisa pada sisi ini.
         </p>
       ) : (
@@ -40,13 +41,13 @@ function Allocations({
               {...form.register(`${name}.${i}.selected`)}
             />
             <span className="min-w-0 flex-1">
-              <span className="block break-words text-sm font-medium">
+              <span className="block break-words text-14 font-medium">
                 {l.reference || l.description}
               </span>
-              <span className="mt-1 block text-xs text-muted-foreground">
+              <span className="mt-1 block text-13 text-muted-foreground">
                 {financeDate(l.date)} / Sisa {financeCurrency(l.remaining)}
               </span>
-              <span className="mt-2 block text-xs">Jumlah alokasi (Rp)</span>
+              <span className="mt-2 block text-13">Jumlah alokasi (Rp)</span>
               <CurrencyField
                 allowNegative
                 fractionDigits={2}
@@ -77,12 +78,12 @@ export function FinanceReconcileForm(p: FinanceFormProps) {
     <form
       noValidate
       aria-busy={s.command.pending}
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={s.submit}
     >
       <div>
-        <h1 className="text-xl font-semibold">Cocokkan mutasi bank</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <PageTitle className="">Cocokkan mutasi bank</PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Pilih transaksi buku dan bank dengan arah yang sama. Alokasi parsial
           diperbolehkan.
         </p>
@@ -149,7 +150,7 @@ export function FinanceReconcileForm(p: FinanceFormProps) {
           ["Selisih", s.difference],
         ].map(([label, value]) => (
           <div key={label}>
-            <dt className="text-sm text-muted-foreground">{label}</dt>
+            <dt className="text-14 text-muted-foreground">{label}</dt>
             <dd className="mt-1 font-semibold tabular-nums">
               {financeCurrency(Number(value) / 100)}
             </dd>
@@ -166,7 +167,7 @@ export function FinanceReconcileForm(p: FinanceFormProps) {
         </p>
       )}
       {Object.keys(s.form.formState.errors).length > 0 && (
-        <p role="alert" className="text-sm text-destructive">
+        <p role="alert" className="text-14 text-destructive">
           Periksa jumlah alokasi yang dipilih.
         </p>
       )}

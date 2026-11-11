@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { FormSelect } from "@/components/shared/form-select";
 import { RequiredMark } from "@/components/shared/required-mark";
 import { useFinanceImport } from "@/hooks/finance/use-finance-import";
@@ -10,12 +11,12 @@ export function FinanceImportForm(p: FinanceFormProps) {
     <form
       noValidate
       aria-busy={s.command.pending}
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={s.submit}
     >
       <div>
-        <h1 className="text-xl font-semibold">Impor mutasi bank</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <PageTitle className="">Impor mutasi bank</PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Impor menjadi pembanding rekonsiliasi. Saldo buku tidak berubah.
         </p>
       </div>
@@ -62,12 +63,12 @@ export function FinanceImportForm(p: FinanceFormProps) {
           <textarea
             aria-invalid={Boolean(s.form.formState.errors.csv)}
             rows={10}
-            className="ui-input !h-auto font-mono text-xs"
+            className="ui-input !h-auto font-mono text-13"
             {...s.form.register("csv", { required: "Isi CSV wajib diisi." })}
             placeholder={template}
           />
           {s.form.formState.errors.csv && (
-            <span role="alert" className="text-xs text-destructive">
+            <span role="alert" className="text-13 text-destructive">
               {s.form.formState.errors.csv.message}
             </span>
           )}

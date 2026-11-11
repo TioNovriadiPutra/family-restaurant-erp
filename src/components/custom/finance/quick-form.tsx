@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import { CurrencyField } from "@/components/shared/currency-field";
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
@@ -23,14 +24,14 @@ export function FinanceQuickForm(p: FinanceQuickProps) {
     <form
       noValidate
       aria-busy={s.command.pending}
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={s.submit}
     >
       <div>
-        <h2 className="text-lg font-semibold">
+        <SectionTitle className="">
           {p.account ? "Edit rekening" : quickTitles[p.action]}
-        </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        </SectionTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           {master
             ? "Atur nama yang mudah dikenali saat mencatat transaksi."
             : p.action === "capital"
@@ -175,7 +176,7 @@ export function FinanceQuickForm(p: FinanceQuickProps) {
         )}
       </fieldset>
       {Object.keys(errors).length > 0 && (
-        <p role="alert" className="text-sm text-destructive">
+        <p role="alert" className="text-14 text-destructive">
           Lengkapi kolom wajib dan periksa nominal.
         </p>
       )}

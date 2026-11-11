@@ -1,3 +1,4 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
 import { DocumentText } from "iconsax-reactjs";
 import {
   recipeDate,
@@ -43,13 +44,13 @@ export function RecipeRecordsTable({ view, items, onOpen }: RecipeTableProps) {
             "Aksi",
           ];
   return (
-    <table className="ui-table min-w-[680px]">
+    <DataTable className="min-w-[680px]">
       <thead>
         <tr>
           {headings.map((h) => (
-            <th scope="col" key={h}>
+            <DataTableHead scope="col" key={h}>
               {h}
-            </th>
+            </DataTableHead>
           ))}
         </tr>
       </thead>
@@ -92,7 +93,7 @@ export function RecipeRecordsTable({ view, items, onOpen }: RecipeTableProps) {
           ),
         )}
       </tbody>
-    </table>
+    </DataTable>
   );
 }
 function RecipeRow({ item: r, onOpen }: RecipeRowProps) {
@@ -100,7 +101,7 @@ function RecipeRow({ item: r, onOpen }: RecipeRowProps) {
     <tr>
       <th scope="row">
         <span>{r.name}</span>
-        <span className="mt-1 block text-xs font-normal text-muted-foreground">
+        <span className="mt-1 block text-13 font-normal text-muted-foreground">
           {r.code} · v{r.version}
           {r.output_name ? ` · ${r.output_name}` : ""}
         </span>
@@ -115,7 +116,7 @@ function RecipeRow({ item: r, onOpen }: RecipeRowProps) {
         ) : (
           <>
             {recipeMoney(r.cost.perOutput)}
-            <span className="block text-xs text-muted-foreground">
+            <span className="block text-13 text-muted-foreground">
               per {r.unit === "pcs" ? "porsi" : r.unit}
             </span>
           </>
@@ -128,7 +129,7 @@ function RecipeRow({ item: r, onOpen }: RecipeRowProps) {
           {r.active ? recipeStatus[r.status] : "Nonaktif"}
         </span>
         {r.status === "draft" && r.published_version_id && (
-          <span className="mt-1 block text-xs text-muted-foreground">
+          <span className="mt-1 block text-13 text-muted-foreground">
             Versi terbit masih berlaku
           </span>
         )}
@@ -151,7 +152,7 @@ function HistoryRow({ item: r, onOpen }: RecipeHistoryRowProps) {
     <tr>
       <th scope="row">
         {r.name}
-        <span className="block text-xs font-normal text-muted-foreground">
+        <span className="block text-13 font-normal text-muted-foreground">
           {r.code}
         </span>
       </th>
@@ -179,7 +180,7 @@ function BatchRow({ item: b, onOpen }: RecipeBatchRowProps) {
     <tr>
       <th scope="row">
         {b.number}
-        <span className="block text-xs font-normal text-muted-foreground">
+        <span className="block text-13 font-normal text-muted-foreground">
           {b.recipe_name} · v{b.recipe_version}
         </span>
       </th>

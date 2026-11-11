@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import { InfoCircle } from "iconsax-reactjs";
 import type { EmployeePinDialogProps } from "@/interfaces/employees";
 import { useEmployeePin } from "@/hooks/employees/use-employee-pin";
@@ -11,9 +12,9 @@ export function EmployeePinDialog(props: EmployeePinDialogProps) {
   const title = employee.pin_configured ? "Reset PIN kasir" : "Atur PIN kasir";
   return <dialog ref={dialogRef} className="ui-dialog !m-auto" aria-labelledby="employee-pin-title" aria-describedby="employee-pin-description"
     onCancel={event => { event.preventDefault(); close(); }}>
-    <h2 id="employee-pin-title" className="type-24-semibold">{title}</h2>
+    <SectionTitle id="employee-pin-title" className="">{title}</SectionTitle>
     <p id="employee-pin-description" className="mt-2 text-muted-foreground">{employee.name} · {employee.employee_code}</p>
-    <form method="post" onSubmit={submit} noValidate aria-busy={pending} className="mt-6 space-y-5">
+    <form method="post" onSubmit={submit} noValidate aria-busy={pending} className="mt-6 space-y-5 ui-form">
       <TextField required id="employee-pin" label="PIN baru (6 angka)" type="password" inputMode="numeric" autoComplete="new-password" maxLength={6} readOnly={pending}
         error={errors.pin?.message} {...register("pin", { required: "PIN wajib diisi.", validate: value => validEmployeePin(value) || "Gunakan 6 angka yang tidak berulang atau berurutan." })} />
       <TextField required id="employee-pin-confirmation" label="Konfirmasi PIN" type="password" inputMode="numeric" autoComplete="new-password" maxLength={6} readOnly={pending}

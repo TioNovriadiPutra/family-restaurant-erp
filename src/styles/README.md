@@ -83,3 +83,18 @@ ERP memakai kontrol 40 px secara default. Untuk specimen web dengan target sentu
 FigCraft hanya menentukan light theme. Warna tidak otomatis berubah berdasarkan OS dark mode; variant `dark:` dibuat opt-in melalui class `.dark`. Belum ada palette token dark yang didesain.
 
 Komponen reusable dibangun di `components/shared`; komponen fitur di `components/custom`; hooks UI di `hooks`, query/mutation di `controller`, tipe di `interfaces`, store di `stores`, sesuai AGENTS.md. Gunakan token/class ini daripada menyalin hex, ukuran kontrol atau recipe baru ke setiap komponen.
+
+
+## Modern Hospitality refresh (10 November 2026)
+
+Warna dan shell ERP telah direvisi dari referensi FigCraft awal: latar stone, surface putih, aksen hijau gelap, navigasi terpilih yang lebih tenang, serta dashboard netral. Nilai runtime terbaru berada di `globals.css`; referensi dan status adaptasi POS: `../../../family-restaurant-shared/design/HOSPITALITY-REFRESH.md`. Inter dan nama token semantik tetap dipertahankan. POS belum menerima perubahan palet pada tahap ERP ini.
+
+
+## Referensi putih / teal / oranye (revisi terbaru, ERP saja)
+
+Permintaan pengguna menggantikan arah stone sebelumnya: canvas putih, kartu terpisah, kartu pendapatan teal, aksen oranye untuk ikon dan grafik, sidebar putih, dan pencarian menu yang benar-benar bekerja. Sumber runtime tetap `globals.css`; `--brand-accent`, `--brand-accent-foreground`, dan `--brand-accent-subtle` tersedia sebagai utility Tailwind. Status bisnis, font Inter, API dan data tetap sama. POS tidak mengikuti revisi ini secara otomatis.
+
+
+## Latar lembut dan motif statis
+
+Canvas ERP terbaru memakai #f0f4f2, surface #fcfdfc dan surface-muted #eaf0ed. Motif cincin tipis serta patch titik pada shell dan Login disusun asimetris dengan CSS; tidak ada random runtime, animasi, listener atau asset tambahan. Motif berada di belakang konten, non-interaktif, disederhanakan pada ponsel dan dinonaktifkan dalam forced-colors. Lint/typecheck serta screenshot desktop dan Login 390px diperiksa. Ini revisi khusus ERP; POS tidak berubah.

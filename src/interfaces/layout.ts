@@ -17,10 +17,22 @@ export interface ApplicationPageProps extends Partial<ErpPageProps> {
   dehydratedState?: DehydratedState;
 }
 export type ErpPage<P = ErpPageProps> = NextPage<P> & { erpLayout?: boolean };
-export type ErpAppProps = AppProps<ApplicationPageProps> & { Component: ErpPage<ApplicationPageProps> };
-export interface ErpLayoutProps { session: AuthSession; children: ReactNode }
-export interface PageStateProps { forbidden?: boolean }
-export interface NavigationItem { slug: string; label: string; permission?: string; icon: Icon }
+export type ErpAppProps = AppProps<ApplicationPageProps> & {
+  Component: ErpPage<ApplicationPageProps>;
+};
+export interface ErpLayoutProps {
+  session: AuthSession;
+  children: ReactNode;
+}
+export interface PageStateProps {
+  forbidden?: boolean;
+}
+export interface NavigationItem {
+  slug: string;
+  label: string;
+  permission?: string;
+  icon: Icon;
+}
 export interface SidebarProps {
   items: NavigationItem[];
   activePath: string;
@@ -32,6 +44,7 @@ export interface SidebarProps {
   onNavigate: () => void;
 }
 export interface HeaderProps {
+  navigationItems: NavigationItem[];
   title: string;
   session: AuthSession;
   outlets: OutletAccess[];
@@ -45,4 +58,8 @@ export interface HeaderProps {
   logout: () => void;
   loggingOut: boolean;
   error: string | null;
+}
+
+export interface NavigationSearchProps {
+  items: NavigationItem[];
 }

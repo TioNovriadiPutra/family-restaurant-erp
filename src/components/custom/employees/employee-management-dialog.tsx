@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import type { EmployeeManagementDialogProps } from "@/interfaces/employees";
 import { useEmployeeManagement } from "@/hooks/employees/use-employee-management";
 import { employeeError } from "@/controller/employees/use-employees";
@@ -8,9 +9,9 @@ export function EmployeeManagementDialog(props: EmployeeManagementDialogProps) {
   const { form, roles, dialogRef, close, submit, pending } = useEmployeeManagement(props);
   const deleting = action === "delete";
   return <dialog ref={dialogRef} className="ui-dialog !m-auto" aria-labelledby="employee-manage-title" aria-describedby="employee-manage-description" onCancel={event => { event.preventDefault(); close(); }}>
-    <h2 id="employee-manage-title" className="type-24-semibold">{deleting ? "Hapus karyawan?" : "Edit karyawan"}</h2>
+    <SectionTitle id="employee-manage-title" className="">{deleting ? "Hapus karyawan?" : "Edit karyawan"}</SectionTitle>
     <p id="employee-manage-description" className="mt-2 text-muted-foreground">{employee.name} · {employee.employee_code}</p>
-    <form method="post" noValidate onSubmit={submit} aria-busy={pending} className="mt-6 space-y-5">
+    <form method="post" noValidate onSubmit={submit} aria-busy={pending} className="mt-6 space-y-5 ui-form">
       {deleting ? <p className="ui-alert ui-alert-warning">Profil, penugasan role, dan PIN karyawan akan dihapus. Profil yang sudah terhubung akun login atau memiliki riwayat terkait tidak dapat dihapus; gunakan status Nonaktif.</p> : <>
         <EmployeeFields form={form} roles={roles.data ?? []} disabled={pending} roleDisabled={pending || roles.isPending || roles.isError} emailReadOnly={employee.login_linked} />
         <p className="ui-help">ID karyawan tetap. Perubahan status berlaku untuk seluruh outlet karyawan ini. {employee.login_linked ? "Email akun login tidak diubah melalui form ini." : ""}</p>

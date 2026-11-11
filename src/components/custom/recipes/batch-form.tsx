@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/shared/page-heading';
 import { TextField } from "@/components/shared/text-field";
 import { FormSelect } from "@/components/shared/form-select";
 import { RequiredMark } from "@/components/shared/required-mark";
@@ -21,14 +22,14 @@ export function RecipeBatchEditor(props: RecipeBatchEditorProps) {
     <form
       aria-busy={s.command.pending}
       noValidate
-      className="ui-card space-y-5"
+      className="ui-card space-y-5 ui-form ui-form-panel"
       onSubmit={s.submit}
     >
       <div>
-        <h1 className="text-lg font-semibold">
+        <PageTitle className="">
           {props.detail ? "Edit draf produksi" : "Catat produksi bahan"}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        </PageTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Draf belum mengubah stok. Periksa pemakaian aktual sebelum posting
           produksi.
         </p>
@@ -149,7 +150,7 @@ export function RecipeBatchEditor(props: RecipeBatchEditorProps) {
               </button>
             )}
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             Jumlah memakai satuan dasar bahan. Perubahan target tidak menimpa
             input aktual secara otomatis.
           </p>

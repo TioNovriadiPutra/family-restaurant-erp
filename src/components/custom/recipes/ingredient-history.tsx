@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { SectionTitle } from '@/components/shared/page-heading';
 import {
   useRecipeRead,
   recipeDate,
@@ -31,14 +33,14 @@ export function RecipeIngredientHistory({
   return (
     <div className="space-y-3">
       <div>
-        <h2 className="text-lg font-semibold">Sumber perubahan biaya bahan</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <SectionTitle className="">Sumber perubahan biaya bahan</SectionTitle>
+        <p className="mt-1 text-14 text-muted-foreground">
           Maksimal 50 mutasi terbaru bahan dalam resep. Biaya mutasi adalah
           biaya saat pencatatan, bukan HPP penjualan.
         </p>
       </div>
       <div className="ui-table-container">
-        <table className="ui-table min-w-[680px]">
+        <DataTable className="min-w-[680px]">
           <thead>
             <tr>
               {[
@@ -48,9 +50,9 @@ export function RecipeIngredientHistory({
                 "Biaya satuan stok",
                 "Dokumen sumber",
               ].map((h) => (
-                <th key={h} scope="col">
+                <DataTableHead key={h} scope="col">
                   {h}
-                </th>
+                </DataTableHead>
               ))}
             </tr>
           </thead>
@@ -59,7 +61,7 @@ export function RecipeIngredientHistory({
               <tr>
                 <td
                   colSpan={5}
-                  className="py-8 text-center text-muted-foreground"
+                  className="text-center text-muted-foreground"
                 >
                   Belum ada mutasi bahan untuk resep ini.
                 </td>
@@ -81,7 +83,7 @@ export function RecipeIngredientHistory({
               </tr>
             ))}
           </tbody>
-        </table>
+        </DataTable>
       </div>
     </div>
   );

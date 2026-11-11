@@ -1,3 +1,4 @@
+import { PageHeader, PageTitle } from '@/components/shared/page-heading';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -80,15 +81,15 @@ function Workspace(p: FinanceWorkspaceProps) {
     <div className="space-y-5">
       <Link
         href="/keuangan"
-        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        className="inline-flex min-h-11 items-center gap-2 text-14 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft2 size={16} aria-hidden />
         Keuangan
       </Link>
-      <div className="flex flex-wrap items-start justify-between gap-3">
+      <PageHeader className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <PageTitle className="">{title}</PageTitle>
+          <p className="mt-1 text-14 text-muted-foreground">
             {p.view === "movements"
               ? "Saldo pembukuan dan aliran dana dari transaksi yang sudah diposting."
               : p.view === "expenses"
@@ -162,7 +163,7 @@ function Workspace(p: FinanceWorkspaceProps) {
             ) : null}
           </div>
         )}
-      </div>
+      </PageHeader>
       {(s.notice || router.query.saved === "1") && (
         <p role="status" className="ui-alert ui-alert-success">
           {s.notice || "Data keuangan berhasil disimpan."}
@@ -185,7 +186,7 @@ function Workspace(p: FinanceWorkspaceProps) {
             {options.isPending ? (
               <p role="status">Memuat rekening...</p>
             ) : !options.data?.accounts.length ? (
-              <div className="ui-card text-sm text-muted-foreground">
+              <div className="ui-card text-14 text-muted-foreground">
                 Belum ada rekening. Tambahkan kas atau bank untuk mulai mencatat
                 dana.
               </div>
@@ -193,7 +194,7 @@ function Workspace(p: FinanceWorkspaceProps) {
               options.data.accounts.map((a) => (
                 <article key={a.id} className="ui-card !p-4">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="flex items-center gap-2 text-sm font-medium">
+                    <span className="flex items-center gap-2 text-14 font-medium">
                       <Wallet2 size={18} aria-hidden />
                       {a.name}
                     </span>
@@ -215,7 +216,7 @@ function Workspace(p: FinanceWorkspaceProps) {
                   >
                     {financeCurrency(a.balance)}
                   </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
+                  <p className="mt-1 text-13 text-muted-foreground">
                     {a.kind === "bank" ? "Bank" : "Kas"}
                     {a.mask ? ` / ${a.mask}` : ""} / Saldo buku
                   </p>
@@ -234,7 +235,7 @@ function Workspace(p: FinanceWorkspaceProps) {
       {p.view !== "suppliers" && p.view !== "movements" && (
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="ui-card !p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-14 text-muted-foreground">
               {p.view === "journals"
                 ? "Total debit sesuai filter"
                 : p.view === "expenses"
@@ -252,7 +253,7 @@ function Workspace(p: FinanceWorkspaceProps) {
             </p>
           </div>
           <div className="ui-card !p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-14 text-muted-foreground">
               {p.view === "journals"
                 ? "Total kredit sesuai filter"
                 : "Pencatatan"}
@@ -293,14 +294,14 @@ function Workspace(p: FinanceWorkspaceProps) {
         className="ui-table-container"
         aria-label={`Daftar ${title.toLowerCase()}`}
       >
-        <div className="grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="ui-filter-bar grid sm:grid-cols-2 lg:grid-cols-4">
           <label className="ui-field">
             <span className="ui-label">Cari transaksi</span>
             <span className="relative">
               <SearchNormal1
                 size={17}
                 aria-hidden
-                className="pointer-events-none absolute left-3 top-3 text-muted-foreground"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
               <input
                 type="search"
@@ -373,7 +374,7 @@ function Workspace(p: FinanceWorkspaceProps) {
             onPage={(page) => s.change("page", page)}
           />
         ) : q.isPending ? (
-          <p role="status" className="p-6 text-sm text-muted-foreground">
+          <p role="status" className="p-6 text-14 text-muted-foreground">
             Memuat transaksi...
           </p>
         ) : q.isError ? (
@@ -391,7 +392,7 @@ function Workspace(p: FinanceWorkspaceProps) {
         ) : !q.data?.items.length ? (
           <div className="p-8 text-center">
             <p className="font-medium">Belum ada transaksi sesuai filter</p>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-14 text-muted-foreground">
               Data tampil setelah dokumen terkait dicatat dan diposting.
             </p>
           </div>
@@ -414,7 +415,7 @@ function Workspace(p: FinanceWorkspaceProps) {
               }}
               proofPending={proof.isPending}
             />
-            <div className="flex items-center justify-between gap-3 border-t border-border p-4 text-sm">
+            <div className="flex items-center justify-between gap-3 border-t border-border p-4 text-14">
               <span>
                 {q.data.total} transaksi / Halaman {s.filters.page}
               </span>

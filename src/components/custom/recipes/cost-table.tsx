@@ -1,3 +1,4 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
 import { recipeMoney, recipeQuantity } from "@/controller/recipes/use-recipes";
 import type { RecipeCostTableProps } from "@/interfaces/recipes";
 export function RecipeCostTable({
@@ -14,7 +15,7 @@ export function RecipeCostTable({
         </p>
       )}
       <div className="ui-table-container">
-        <table className="ui-table min-w-[680px]">
+        <DataTable className="min-w-[680px]">
           <thead>
             <tr>
               {[
@@ -24,9 +25,9 @@ export function RecipeCostTable({
                 "Biaya / satuan stok",
                 "Biaya bahan",
               ].map((t) => (
-                <th key={t} scope="col">
+                <DataTableHead key={t} scope="col">
                   {t}
-                </th>
+                </DataTableHead>
               ))}
             </tr>
           </thead>
@@ -36,7 +37,7 @@ export function RecipeCostTable({
                 <th scope="row">
                   {l.name}
                   {!l.active && (
-                    <span className="block text-xs text-destructive">
+                    <span className="block text-13 text-destructive">
                       Bahan nonaktif
                     </span>
                   )}
@@ -58,9 +59,9 @@ export function RecipeCostTable({
               </tr>
             ))}
           </tbody>
-        </table>
+        </DataTable>
       </div>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-14 text-muted-foreground">
         Total biaya bahan dibagi hasil bersih {recipeQuantity(yieldQuantity)}{" "}
         {unit}. Biaya setengah jadi memakai saldo hasil produksi, sehingga bahan
         mentahnya tidak dihitung dua kali.

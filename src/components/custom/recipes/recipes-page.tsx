@@ -1,3 +1,4 @@
+import { PageHeader, PageTitle } from '@/components/shared/page-heading';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -104,21 +105,21 @@ function RecipesWorkspace(props: RecipeWorkspaceProps) {
     <div className="space-y-5">
       <Link
         href="/resep"
-        className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        className="inline-flex min-h-11 items-center gap-2 text-14 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft2 size={16} aria-hidden />
         Resep & HPP
       </Link>
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <PageHeader className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-control border border-border bg-secondary text-primary">
+          <span className="ui-page-icon">
             <Icon size={22} aria-hidden />
           </span>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">
+            <PageTitle className="">
               {screen.title}
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            </PageTitle>
+            <p className="mt-1 text-14 text-muted-foreground">
               {screen.description}
             </p>
           </div>
@@ -137,7 +138,7 @@ function RecipesWorkspace(props: RecipeWorkspaceProps) {
               {view === "recipes" ? "Tambah resep" : "Catat produksi"}
             </button>
           )}
-      </div>
+      </PageHeader>
       {router.query.saved === "1" && (
         <p role="status" className="ui-alert ui-alert-success">
           Data berhasil disimpan.
@@ -194,7 +195,7 @@ function RecipesWorkspace(props: RecipeWorkspaceProps) {
       {
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
           <div className="ui-card !p-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-14 text-muted-foreground">
               {view === "recipes"
                 ? "Resep sesuai filter"
                 : view === "history"
@@ -206,11 +207,11 @@ function RecipesWorkspace(props: RecipeWorkspaceProps) {
             </p>
           </div>
           <div className="ui-card !p-4">
-            <p className="text-sm text-muted-foreground">Metode biaya</p>
+            <p className="text-14 text-muted-foreground">Metode biaya</p>
             <p className="mt-2 font-semibold">Rata-rata tertimbang</p>
           </div>
           <div className="ui-card !p-4 max-lg:col-span-2">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-14 text-muted-foreground">
               {view === "batches" ? "Perubahan stok" : "Dasar perhitungan"}
             </p>
             <p className="mt-2 font-semibold">
@@ -227,7 +228,7 @@ function RecipesWorkspace(props: RecipeWorkspaceProps) {
         aria-label={`Daftar ${screen.title.toLowerCase()}`}
         className="ui-table-container"
       >
-        <div className="flex flex-wrap items-end justify-between gap-3 p-4">
+        <div className="flex flex-wrap items-end justify-between gap-3  ui-filter-bar">
           <div className="ui-field w-full sm:max-w-sm">
             <label htmlFor="recipe-search" className="ui-label">
               Cari {view === "batches" ? "produksi" : "resep"}
@@ -236,7 +237,7 @@ function RecipesWorkspace(props: RecipeWorkspaceProps) {
               <SearchNormal1
                 aria-hidden
                 size={17}
-                className="pointer-events-none absolute left-3 top-3 text-muted-foreground"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
               <input
                 id="recipe-search"
@@ -337,7 +338,7 @@ function RecipesWorkspace(props: RecipeWorkspaceProps) {
         />
       )}
       {view === "history" && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-14 text-muted-foreground">
           Riwayat berisi snapshot yang sengaja disimpan. Pembelian baru
           memperbarui estimasi HPP saat ini, tetapi tidak menulis ulang snapshot
           lama.

@@ -1,3 +1,4 @@
+import { SectionTitle } from '@/components/shared/page-heading';
 import {
   useRecipeRead,
   recipeDate,
@@ -30,12 +31,12 @@ export function RecipeSnapshotPanel({
     <section aria-label="Detail snapshot HPP" className="ui-card space-y-4">
       <div className="flex flex-wrap justify-between gap-3">
         <div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-14 text-muted-foreground">
             Snapshot biaya · {recipeDate(d.calculatedAt)}
           </p>
-          <h2 className="mt-1 text-xl font-semibold">
+          <SectionTitle className="mt-1">
             {m.name} · v{m.version}
-          </h2>
+          </SectionTitle>
           <p className="mt-1 font-medium">
             {recipeMoney(d.perOutput)} / {m.unit}
           </p>
@@ -51,7 +52,7 @@ export function RecipeSnapshotPanel({
           Snapshot lama belum menyimpan rincian tampilan.
         </p>
       )}
-      <p className="text-sm text-muted-foreground">
+      <p className="text-14 text-muted-foreground">
         Biaya tersimpan tetap sama meskipun harga bahan atau versi resep
         berubah.
       </p>

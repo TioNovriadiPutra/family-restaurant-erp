@@ -1,3 +1,5 @@
+import { DataTable, DataTableHead } from '@/components/shared/data-table';
+import { SectionTitle } from '@/components/shared/page-heading';
 import { useState } from "react";
 import {
   inventoryDate,
@@ -27,8 +29,8 @@ export function InventoryHistory({
     <section className="ui-card space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-lg font-semibold">Mutasi · {stock.name}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <SectionTitle className="">Mutasi · {stock.name}</SectionTitle>
+          <p className="mt-1 text-14 text-muted-foreground">
             {stock.location} · satuan {stock.unit}
           </p>
         </div>
@@ -43,19 +45,19 @@ export function InventoryHistory({
           {inventoryError(query.error)}
         </p>
       ) : !query.data.items.length ? (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-14 text-muted-foreground">
           Belum ada mutasi bahan ini.
         </p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="ui-table min-w-[650px]">
+          <DataTable className="min-w-[650px]">
             <thead>
               <tr>
-                <th>Waktu</th>
-                <th>Dokumen</th>
-                <th>Perubahan</th>
-                <th>Nilai</th>
-                <th>Saldo setelahnya</th>
+                <DataTableHead>Waktu</DataTableHead>
+                <DataTableHead>Dokumen</DataTableHead>
+                <DataTableHead>Perubahan</DataTableHead>
+                <DataTableHead>Nilai</DataTableHead>
+                <DataTableHead>Saldo setelahnya</DataTableHead>
               </tr>
             </thead>
             <tbody>
@@ -79,7 +81,7 @@ export function InventoryHistory({
                 </tr>
               ))}
             </tbody>
-          </table>
+          </DataTable>
         </div>
       )}
       {Number(query.data?.total) > 20 && (

@@ -1,6 +1,7 @@
 // Local review harness: real Next.js app, fake Supabase services, loopback only.
 // Never imported by application code. No production credentials are read.
 import http from "node:http";
+import { spawn } from "node:child_process";
 import {createSettingsReview} from "./review-settings-data.mjs";
 import next from "next";
 import fs from "node:fs/promises";
@@ -86,13 +87,19 @@ const fake = http.createServer(async (req,res) => {
     const result=p_action==="options"?{suppliers:[supplier],items:[{id,name:"Beras premium",base_unit_id:id,units:[{id,code:"kg"}]}],units:[{id,code:"kg"}],locations:[],accounts:[]}:p_action==="suppliers"?{items:[supplier]}:p_action==="stock"?{items:[{id,name:"Beras premium",code:"BHN-001",location:"Gudang utama",unit:"kg",quantity:"25",inventory_value:"375000",average_unit_cost:"15000"}]}:p_action==="purchases"?{items:[purchase],total:1}:p_action==="detail"?{items:[purchase]}:{id};
     res.end(JSON.stringify(result));
   }
+  else if (req.url === "/rest/v1/rpc/dining_tables_read") res.end(JSON.stringify({items:Array.from({length:10},(_,i)=>({id:'65ef7c2e-d91a-4efb-a0bb-019c422062b'+i,code:'M'+String(i+1).padStart(2,'0'),seats:i<2?2:4,active:true,revision:1}))}));
   else if (req.url === "/rest/v1/rpc/erp_dashboard") res.end(JSON.stringify(dashboard(JSON.parse(raw).p_outlet_id)));
   else { res.statusCode=404; res.end("{}"); }
 });
 await new Promise(resolve => fake.listen(3191,"127.0.0.1",resolve));
 process.env.NEXT_PUBLIC_SUPABASE_URL = "http://127.0.0.1:3191";
 process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "local-review-public-key";
-const app = next({ dev: true, dir: reviewRoot, hostname: "127.0.0.1", port: 3157, turbopack: true });
+const production = process.env.REVIEW_PRODUCTION === '1';
+if (production) await new Promise((resolve,reject)=>{
+  const build=spawn(process.execPath,[path.join(root,'node_modules/next/dist/bin/next'),'build'],{cwd:reviewRoot,env:process.env,stdio:'inherit'});
+  build.once('error',reject);build.once('exit',code=>code===0?resolve():reject(new Error('Review production build failed')));
+});
+const app = next({ dev: !production, dir: reviewRoot, hostname: "127.0.0.1", port: 3157, turbopack: true });
 await app.prepare();
 const frontend = http.createServer(app.getRequestHandler());
 await new Promise(resolve => frontend.listen(3157,"127.0.0.1",resolve));
@@ -111,6 +118,27 @@ const cookie = cookies.map(value => value.split(";")[0]).join("; ");
 // Asserts real client routing preserves the same sidebar/header DOM instances.
 const browserChecks = `
 (async function(){
+  if(new URLSearchParams(location.search).get('review-ui')==='1'){
+    const checks=[];
+    const wait=async(test)=>{for(let i=0;i<150;i++){if(test())return;await new Promise(r=>setTimeout(r,100));}throw new Error('UI review condition timed out');};
+    const assert=(value,label)=>{if(!value)throw new Error(label);checks.push(label);};
+    try{
+      await wait(()=>document.querySelector('main h1'));
+      await document.fonts.ready;await new Promise(r=>setTimeout(r,900));
+      const h=document.querySelector('main h1');
+      const size=parseFloat(getComputedStyle(h).fontSize);
+      assert(size===(innerWidth<768?24:28),'consistent page title size');
+      assert(getComputedStyle(h).fontFamily.toLowerCase().includes('inter'),'Inter typography');
+      assert(document.documentElement.scrollWidth<=innerWidth,'no horizontal page overflow');
+      const inputs=[...document.querySelectorAll('main .ui-input')].filter(el=>el.getBoundingClientRect().height>0);
+      assert(inputs.every(el=>el.getBoundingClientRect().height>=44),'fields have 44px targets');
+      assert([...document.querySelectorAll('main .ui-table')].every(el=>parseFloat(getComputedStyle(el).fontSize)===14),'consistent table type size');
+      const modalLabel=new URLSearchParams(location.search).get('review-ui-modal');
+      if(modalLabel){const button=[...document.querySelectorAll('main button')].find(el=>el.textContent.trim()===modalLabel);assert(!!button,'modal trigger available');button.focus();button.click();await wait(()=>document.querySelector('dialog[open]'));const dialog=document.querySelector('dialog[open]');assert(dialog.contains(document.activeElement),'modal contains focus');assert(dialog.getBoundingClientRect().width<=innerWidth-16,'modal fits viewport');}
+      await fetch('/review-result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'ui-system',path:location.pathname,width:innerWidth,ok:true,checks})});
+    }catch(error){await fetch('/review-result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'ui-system',path:location.pathname,width:innerWidth,ok:false,checks,error:String(error)})});}
+    return;
+  }
   if(${process.env.REVIEW_STATIC === '1'}||new URLSearchParams(location.search).get('review-static')==='1')return;
   const checks=[];
   const wait=async(test)=>{for(let n=0;n<150;n++){if(test())return;await new Promise(r=>setTimeout(r,100));}throw new Error('Review condition timed out');};
@@ -283,10 +311,23 @@ const browserChecks = `
     await wait(()=>document.querySelector('main')?.textContent.includes('Rp3.840.000'));
     const header=document.querySelector('header');
     const sidebar=document.querySelector('#erp-desktop-sidebar');
+    const search=header.querySelector('input[type="search"]');
+    if(search && getComputedStyle(search.closest('.erp-search').parentElement).display!=='none'){
+      Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(search,'keuangan');
+      search.dispatchEvent(new Event('input',{bubbles:true}));
+      await wait(()=>header.querySelector('.erp-search-results a[href="/keuangan"]'));
+      assert(header.querySelectorAll('.erp-search-results a').length===1,'navigation search returns the matching allowed module');
+      header.querySelector('.erp-search-results a').click();
+      await wait(()=>location.pathname==='/keuangan');
+      assert(document.querySelector('header')===header,'search navigation preserves shared header');
+      sidebar.querySelector('nav a[href="/"]').click();
+      await wait(()=>location.pathname==='/'&&document.querySelector('main')?.textContent.includes('Rp3.840.000'));
+      assert(!header.querySelector('.erp-search-results'),'search closes after navigation');
+    }
     const summary=header.querySelector('summary');
     const headerBounds=header.getBoundingClientRect();
     const summaryBounds=summary.getBoundingClientRect();
-    assert(headerBounds.height===72,'header keeps a consistent 72px height');
+    assert(headerBounds.height===80,'header keeps a consistent 80px height');
     assert(Math.abs((headerBounds.top+headerBounds.height/2)-(summaryBounds.top+summaryBounds.height/2))<1,'account menu aligns vertically in header');
     assert(summary.querySelectorAll('svg').length===2,'account has one Iconsax profile icon and one dropdown arrow');
     assert(getComputedStyle(summary).listStyleType==='none','native disclosure marker is hidden');
@@ -312,7 +353,7 @@ const browserChecks = `
       sidebar.querySelector('nav a[href="/"]').click();
       await wait(()=>location.pathname==='/' && document.querySelector('main')?.textContent.includes('Rp3.840.000'));
       header.querySelector('[aria-controls="erp-desktop-sidebar"]').click();
-      await wait(()=>sidebar.getBoundingClientRect().width===232);
+      await wait(()=>sidebar.getBoundingClientRect().width===248);
     }
     const select=header.querySelector('[role=combobox]');
     if(!header.querySelector('details').open)header.querySelector('summary').click();
@@ -322,6 +363,7 @@ const browserChecks = `
     select.click();await wait(()=>document.querySelector('[role=listbox]'));[...document.querySelectorAll('[role=option]')].find(o=>o.textContent==='Outlet utama').click();
     await wait(()=>document.querySelector('main').textContent.includes('Rp3.840.000'));
     header.querySelector('details').open=false;
+    assert([...document.querySelectorAll('.dashboard-metric > p:first-of-type')].every(el=>el.getBoundingClientRect().height<=parseFloat(getComputedStyle(el).lineHeight)+1),'dashboard amounts remain on one readable line');
     assert(document.documentElement.scrollWidth<=window.innerWidth,'no horizontal viewport overflow');
     await fetch('/review-result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({width:innerWidth,ok:true,checks})});
   }catch(error){await fetch('/review-result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({width:innerWidth,ok:false,checks,error:String(error),path:location.pathname,hasAmount:document.body.textContent.includes('Rp3.840.000'),sidebarWidth:document.querySelector('#erp-desktop-sidebar')?.getBoundingClientRect().width,sidebarClass:document.querySelector('#erp-desktop-sidebar')?.className,expanded:document.querySelector('header [aria-controls="erp-desktop-sidebar"]')?.getAttribute('aria-expanded')})});}
